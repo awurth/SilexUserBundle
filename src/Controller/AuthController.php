@@ -3,12 +3,8 @@
 namespace AWurth\SilexUser\Controller;
 
 use AWurth\SilexUser\Entity\User;
+use AWurth\SilexUser\Form\RegistrationFormType;
 use Silex\Application;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -31,19 +27,11 @@ class AuthController
 
     public function registerAction(Application $app, Request $request)
     {
+        /** @var User $user */
         $user = new $app['silex_user.user_class']();
 
         /** @var FormInterface $form */
-        $form = $app['form.factory']->createBuilder(FormType::class, $user)
-            ->add('username', TextType::class)
-            ->add('email', EmailType::class)
-            ->add('password', RepeatedType::class, [
-                'type' => PasswordType::class,
-                'first_name' => 'password',
-                'second_name' => 'confirm_password',
-                'invalid_message' => 'The password fields must match.'
-            ])
-            ->getForm();
+        $form = $app['form.factory']->create(RegistrationFormType::class, $user);
 
         if ($form->handleRequest($request)->isValid()) {
             /** @var PasswordEncoderInterface $encoder */
