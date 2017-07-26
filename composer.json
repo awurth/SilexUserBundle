@@ -1,0 +1,25 @@
+{
+    "name": "awurth/silex-user",
+    "description": "A user provider for Silex",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alexis Wurth",
+            "email": "alexis.wurth57@gmail.com"
+        }
+    ],
+    "require": {
+        "dflydev/doctrine-orm-service-provider": "^2.0",
+        "saxulum/saxulum-doctrine-orm-manager-registry-provider": "^3.1",
+        "silex/silex": "^2.2",
+        "symfony/doctrine-bridge": "^3.3",
+        "symfony/form": "^3.3",
+        "symfony/security": "^3.3",
+        "symfony/validator": "^3.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "AWurth\\SilexUser\\": "src/"
+        }
+    }
+}
