@@ -31,7 +31,7 @@ class AuthController
 
     public function registerAction(Application $app, Request $request)
     {
-        $user = new User();
+        $user = new $app['silex_user.user_class']();
 
         /** @var FormInterface $form */
         $form = $app['form.factory']->createBuilder(FormType::class, $user)
