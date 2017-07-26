@@ -62,7 +62,7 @@ class AuthController
             return $app->redirect($this->path($app, 'login'));
         }
 
-        return $app['twig']->render('Auth/register.twig', [
+        return $app['twig']->render('@silex_user/auth/register.twig', [
             'form' => $form->createView()
         ]);
     }
