@@ -11,9 +11,13 @@ use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 /**
+ * Base User class.
+ *
+ * @author Alexis Wurth <alexis.wurth57@gmail.com>
+ *
  * @ORM\MappedSuperclass
  */
-class User implements AdvancedUserInterface
+abstract class User implements AdvancedUserInterface
 {
     /**
      * @var int
