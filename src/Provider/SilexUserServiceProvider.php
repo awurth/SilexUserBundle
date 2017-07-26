@@ -29,6 +29,7 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
     public function register(Container $app)
     {
         $app['silex_user.user_class'] = User::class;
+        $app['silex_user.overwrite_templates'] = false;
 
         $app['auth.controller'] = function () {
             return new AuthController();
@@ -46,7 +47,9 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
      */
     public function boot(Application $app)
     {
-        $app['twig.loader.filesystem']->addPath(__DIR__ . '/../views/', 'silex_user');
+        if (false === $app['silex_user.overwrite_templates']) {
+            $app['twig.loader.filesystem']->addPath(__DIR__ . '/../views/');
+        }
     }
 
     /**

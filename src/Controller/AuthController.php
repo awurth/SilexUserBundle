@@ -23,7 +23,7 @@ class AuthController
 {
     public function loginAction(Application $app, Request $request)
     {
-        return $app['twig']->render('@silex_user/auth/login.twig', [
+        return $app['twig']->render('silex_user/auth/login.twig', [
             'error' => $app['security.last_error']($request),
             'last_username' => $app['session']->get('_security.last_username')
         ]);
@@ -62,7 +62,7 @@ class AuthController
             return $app->redirect($this->path($app, 'login'));
         }
 
-        return $app['twig']->render('@silex_user/auth/register.twig', [
+        return $app['twig']->render('silex_user/auth/register.twig', [
             'form' => $form->createView()
         ]);
     }
