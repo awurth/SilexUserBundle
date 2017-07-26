@@ -8,6 +8,7 @@ use Silex\Application;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 
 /**
@@ -20,7 +21,7 @@ class AuthController
     public function loginAction(Application $app, Request $request)
     {
         return $app['twig']->render('silex_user/auth/login.twig', [
-            'error' => $app['security.last_error']($request),
+            'error'         => $app['security.last_error']($request),
             'last_username' => $app['session']->get('_security.last_username')
         ]);
     }
@@ -37,7 +38,12 @@ class AuthController
             /** @var PasswordEncoderInterface $encoder */
             $encoder = $app['security.encoder_factory']->getEncoder($user);
 
-            $user->setSalt('');
+            if ($encoder instanceof BCryptPasswordEncoder) {
+                $user->setSalt(null);
+            } else {
+                $user->setSalt(rtrim(str_replace('+', '.', base64_encode(random_bytes(32))), '='));
+            }
+
             $user->setPassword($encoder->encodePassword($user->getPassword(), $user->getSalt()));
 
             $em = $app['orm.em'];
