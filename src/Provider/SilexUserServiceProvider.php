@@ -61,7 +61,7 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
         $controllers = $app['controllers_factory'];
 
         $controllers->get('/login', 'auth.controller:loginAction')
-            ->bind('silex_user.register');
+            ->bind('silex_user.login');
 
         $controllers->method('GET|POST')
             ->match('/register', 'auth.controller:registerAction')
