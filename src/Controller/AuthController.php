@@ -59,7 +59,7 @@ class AuthController
 
             $app['session']->getFlashBag()->set('success', 'Account created.');
 
-            return $app->redirect($this->path($app, 'login'));
+            return $app->redirect($this->path($app, 'silex_user.login'));
         }
 
         return $app['twig']->render('silex_user/auth/register.twig', [
