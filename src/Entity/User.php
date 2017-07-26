@@ -46,18 +46,18 @@ class User implements AdvancedUserInterface
     protected $password;
 
     /**
-     * @var bool
-     *
-     * @ORM\Column(name="enabled", type="boolean")
-     */
-    protected $enabled = false;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="salt", type="string", nullable=true)
      */
     protected $salt;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="enabled", type="boolean")
+     */
+    protected $enabled = false;
 
     /**
      * @var array
