@@ -11,8 +11,7 @@ use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="`user`")
+ * @ORM\MappedSuperclass
  */
 class User implements AdvancedUserInterface
 {
@@ -133,16 +132,18 @@ class User implements AdvancedUserInterface
 
     /**
      * @param string $username
+     *
      * @return $this
      */
     public function setUsername($username)
     {
         $this->username = $username;
+
         return $this;
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getUsername()
     {
@@ -151,11 +152,13 @@ class User implements AdvancedUserInterface
 
     /**
      * @param string $email
+     *
      * @return $this
      */
     public function setEmail($email)
     {
         $this->email = $email;
+
         return $this;
     }
 
@@ -169,16 +172,18 @@ class User implements AdvancedUserInterface
 
     /**
      * @param string $password
+     *
      * @return $this
      */
     public function setPassword($password)
     {
         $this->password = $password;
+
         return $this;
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getPassword()
     {
@@ -186,12 +191,14 @@ class User implements AdvancedUserInterface
     }
 
     /**
-     * @param string $salt
+     * @param string|null $salt
+     *
      * @return $this
      */
     public function setSalt($salt)
     {
         $this->salt = $salt;
+
         return $this;
     }
 
@@ -204,12 +211,18 @@ class User implements AdvancedUserInterface
     }
 
     /**
+     * Sets the roles of the user.
+     *
+     * This overwrites any previous roles.
+     *
      * @param array $roles
+     *
      * @return $this
      */
     public function setRoles(array $roles)
     {
         $this->roles = $roles;
+
         return $this;
     }
 
