@@ -45,6 +45,7 @@ class AuthController
             }
 
             $user->setPassword($encoder->encodePassword($user->getPassword(), $user->getSalt()));
+            $user->setEnabled(true);
 
             $em = $app['orm.em'];
 

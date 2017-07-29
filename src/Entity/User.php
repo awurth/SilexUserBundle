@@ -114,16 +114,28 @@ abstract class User implements AdvancedUserInterface
     /**
      * {@inheritdoc}
      */
+    public function eraseCredentials()
+    {
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function isEnabled()
     {
         return $this->enabled;
     }
 
     /**
-     * {@inheritdoc}
+     * @param bool $enabled
+     *
+     * @return $this
      */
-    public function eraseCredentials()
+    public function setEnabled($enabled)
     {
+        $this->enabled = (bool) $enabled;
+
+        return $this;
     }
 
     /**
