@@ -3,6 +3,7 @@
 namespace AWurth\SilexUser\Provider;
 
 use AWurth\SilexUser\Controller\AuthController;
+use AWurth\SilexUser\Controller\RegistrationController;
 use AWurth\SilexUser\Entity\User;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
@@ -34,6 +35,10 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
         $app['auth.controller'] = function () {
             return new AuthController();
         };
+
+        $app['registration.controller'] = function () {
+            return new RegistrationController();
+        };
     }
 
     /**
@@ -61,14 +66,18 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
      */
     public function connect(Application $app)
     {
+        /** @var ControllerCollection $controllers */
         $controllers = $app['controllers_factory'];
 
         $controllers->get('/login', 'auth.controller:loginAction')
             ->bind('silex_user.login');
 
         $controllers->method('GET|POST')
-            ->match('/register', 'auth.controller:registerAction')
+            ->match('/register', 'registration.controller:registerAction')
             ->bind('silex_user.register');
+
+        $controllers->get('/register/confirmed', 'registration.controller:confirmedAction')
+            ->bind('silex_user.registration_confirmed');
 
         return $controllers;
     }
