@@ -157,6 +157,12 @@ You can now set the `silex_user.overwrite_templates` option to `true`.
 This just prevents SilexUser to add the default template directory to Twig paths.
 
 # TODO
+- Custom routes
+- Change password
+- Authenticate by username or email
+- Events
+- Groups
+- Roles
 - Email activation
 - User manager
 - Translations
