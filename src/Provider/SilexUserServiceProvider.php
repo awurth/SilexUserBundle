@@ -32,12 +32,12 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
         $app['silex_user.user_class'] = User::class;
         $app['silex_user.overwrite_templates'] = false;
 
-        $app['auth.controller'] = function () {
-            return new AuthController();
+        $app['auth.controller'] = function ($app) {
+            return new AuthController($app);
         };
 
-        $app['registration.controller'] = function () {
-            return new RegistrationController();
+        $app['registration.controller'] = function ($app) {
+            return new RegistrationController($app);
         };
     }
 
