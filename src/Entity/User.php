@@ -4,7 +4,6 @@ namespace AWurth\SilexUser\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Regex;
@@ -17,7 +16,7 @@ use Symfony\Component\Validator\Mapping\ClassMetadata;
  *
  * @ORM\MappedSuperclass
  */
-abstract class User implements AdvancedUserInterface
+abstract class User implements UserInterface
 {
     /**
      * @var int
@@ -127,9 +126,7 @@ abstract class User implements AdvancedUserInterface
     }
 
     /**
-     * @param bool $enabled
-     *
-     * @return $this
+     * {@inheritdoc}
      */
     public function setEnabled($enabled)
     {
@@ -139,7 +136,7 @@ abstract class User implements AdvancedUserInterface
     }
 
     /**
-     * @return int
+     * {@inheritdoc}
      */
     public function getId()
     {
@@ -147,9 +144,7 @@ abstract class User implements AdvancedUserInterface
     }
 
     /**
-     * @param string $username
-     *
-     * @return $this
+     * {@inheritdoc}
      */
     public function setUsername($username)
     {
@@ -167,9 +162,7 @@ abstract class User implements AdvancedUserInterface
     }
 
     /**
-     * @param string $email
-     *
-     * @return $this
+     * {@inheritdoc}
      */
     public function setEmail($email)
     {
@@ -179,7 +172,7 @@ abstract class User implements AdvancedUserInterface
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getEmail()
     {
@@ -187,9 +180,7 @@ abstract class User implements AdvancedUserInterface
     }
 
     /**
-     * @param string $password
-     *
-     * @return $this
+     * {@inheritdoc}
      */
     public function setPassword($password)
     {
@@ -207,9 +198,7 @@ abstract class User implements AdvancedUserInterface
     }
 
     /**
-     * @param string|null $salt
-     *
-     * @return $this
+     * {@inheritdoc}
      */
     public function setSalt($salt)
     {
@@ -227,13 +216,7 @@ abstract class User implements AdvancedUserInterface
     }
 
     /**
-     * Sets the roles of the user.
-     *
-     * This overwrites any previous roles.
-     *
-     * @param array $roles
-     *
-     * @return $this
+     * {@inheritdoc}
      */
     public function setRoles(array $roles)
     {
