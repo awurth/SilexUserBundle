@@ -164,7 +164,6 @@ This just prevents SilexUser to add the default templates directory to Twig path
 - Groups
 - Roles
 - Email activation
-- User manager
 - Tests
 - Configuration
     - Security

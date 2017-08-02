@@ -7,7 +7,7 @@ use Silex\Application;
 use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 
-class UserManager
+class UserManager implements UserManagerInterface
 {
     /**
      * @var Application
@@ -28,9 +28,7 @@ class UserManager
     }
 
     /**
-     * Deletes a user.
-     *
-     * @param UserInterface $user
+     * {@inheritdoc}
      */
     public function deleteUser(UserInterface $user)
     {
@@ -41,11 +39,7 @@ class UserManager
     }
 
     /**
-     * Finds one user by the given criteria.
-     *
-     * @param array $criteria
-     *
-     * @return null|UserInterface
+     * {@inheritdoc}
      */
     public function findUserBy(array $criteria)
     {
@@ -53,11 +47,7 @@ class UserManager
     }
 
     /**
-     * Finds a user by its email.
-     *
-     * @param string $email
-     *
-     * @return null|UserInterface
+     * {@inheritdoc}
      */
     public function findUserByEmail($email)
     {
@@ -65,11 +55,7 @@ class UserManager
     }
 
     /**
-     * Finds a user by its username.
-     *
-     * @param string $username
-     *
-     * @return null|UserInterface
+     * {@inheritdoc}
      */
     public function findUserByUsername($username)
     {
@@ -77,11 +63,7 @@ class UserManager
     }
 
     /**
-     * Finds a user by its username or email.
-     *
-     * @param string $usernameOrEmail
-     *
-     * @return null|UserInterface
+     * {@inheritdoc}
      */
     public function findUserByUsernameOrEmail($usernameOrEmail)
     {
@@ -93,9 +75,7 @@ class UserManager
     }
 
     /**
-     * Returns a collection with all user instances.
-     *
-     * @return array
+     * {@inheritdoc}
      */
     public function findUsers()
     {
@@ -103,9 +83,7 @@ class UserManager
     }
 
     /**
-     * Updates a user password if a plain password is set.
-     *
-     * @param UserInterface $user
+     * {@inheritdoc}
      */
     public function updatePassword(UserInterface $user)
     {
@@ -129,10 +107,7 @@ class UserManager
     }
 
     /**
-     * Updates a user.
-     *
-     * @param UserInterface $user
-     * @param bool $flush
+     * {@inheritdoc}
      */
     public function updateUser(UserInterface $user, $flush = true)
     {
