@@ -60,14 +60,13 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
         }
 
         if (true === $app['silex_user.use_translations']) {
-            $app->extend('translator', function (Translator $translator) {
-                $translator->addLoader('php', new PhpFileLoader());
+            /** @var Translator $translator */
+            $translator = $app['translator'];
 
-                $translator->addResource('php', __DIR__ . '/../Resources/translations/en.php', 'en');
-                $translator->addResource('php', __DIR__ . '/../Resources/translations/fr.php', 'fr');
+            $translator->addLoader('php', new PhpFileLoader());
 
-                return $translator;
-            });
+            $translator->addResource('php', __DIR__ . '/../Resources/translations/en.php', 'en');
+            $translator->addResource('php', __DIR__ . '/../Resources/translations/fr.php', 'fr');
         }
     }
 
