@@ -4,7 +4,8 @@ return [
     'silex_user' => [
         'form' => [
             'username' => 'Username',
-            'password' => 'Password'
+            'password' => 'Password',
+            'password_confirmation' => 'Repeat password'
         ],
         'login' => [
             'title' => 'Login'

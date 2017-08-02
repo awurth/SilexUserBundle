@@ -3,6 +3,7 @@
 namespace AWurth\SilexUser\Controller;
 
 use AWurth\SilexUser\Entity\User;
+use AWurth\SilexUser\Entity\UserManager;
 use AWurth\SilexUser\Event\FilterUserResponseEvent;
 use AWurth\SilexUser\Event\FormEvent;
 use AWurth\SilexUser\Event\GetResponseUserEvent;
@@ -11,8 +12,6 @@ use AWurth\SilexUser\Form\RegistrationFormType;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
-use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 
 /**
  * Silex User Registration Controller.
@@ -23,6 +22,9 @@ class RegistrationController extends Controller
 {
     public function registerAction(Request $request)
     {
+        /** @var UserManager $userManager */
+        $userManager = $this->application['silex_user.user_manager'];
+
         /** @var EventDispatcherInterface $dispatcher */
         $dispatcher = $this->application['dispatcher'];
 
@@ -47,21 +49,7 @@ class RegistrationController extends Controller
                 $event = new FormEvent($form, $request);
                 $dispatcher->dispatch(Events::REGISTRATION_SUCCESS, $event);
 
-                /** @var PasswordEncoderInterface $encoder */
-                $encoder = $this->application['security.encoder_factory']->getEncoder($user);
-
-                if ($encoder instanceof BCryptPasswordEncoder) {
-                    $user->setSalt(null);
-                } else {
-                    $user->setSalt(rtrim(str_replace('+', '.', base64_encode(random_bytes(32))), '='));
-                }
-
-                $user->setPassword($encoder->encodePassword($user->getPassword(), $user->getSalt()));
-
-                $em = $this->getEntityManager();
-
-                $em->persist($user);
-                $em->flush();
+                $userManager->updateUser($user);
 
                 $response = $event->getResponse();
 

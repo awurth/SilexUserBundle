@@ -5,6 +5,7 @@ namespace AWurth\SilexUser\Provider;
 use AWurth\SilexUser\Controller\AuthController;
 use AWurth\SilexUser\Controller\RegistrationController;
 use AWurth\SilexUser\Entity\User;
+use AWurth\SilexUser\Entity\UserManager;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
 use Silex\Api\BootableProviderInterface;
@@ -34,6 +35,10 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
         $app['silex_user.user_class'] = User::class;
         $app['silex_user.use_templates'] = true;
         $app['silex_user.use_translations'] = true;
+
+        $app['silex_user.user_manager'] = function ($app) {
+            return new UserManager($app);
+        };
 
         $app['auth.controller'] = function ($app) {
             return new AuthController($app);

@@ -48,6 +48,22 @@ interface UserInterface extends AdvancedUserInterface
     public function setPassword($password);
 
     /**
+     * Gets the plain password.
+     *
+     * @return string
+     */
+    public function getPlainPassword();
+
+    /**
+     * Sets the plain password.
+     *
+     * @param string $password
+     *
+     * @return self
+     */
+    public function setPlainPassword($password);
+
+    /**
      * Sets the salt.
      *
      * @param string|null $salt

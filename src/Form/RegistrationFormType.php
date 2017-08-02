@@ -24,11 +24,13 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('username', TextType::class)
             ->add('email', EmailType::class)
-            ->add('password', RepeatedType::class, [
+            ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'first_name' => 'password',
                 'second_name' => 'confirm_password',
-                'invalid_message' => 'The password fields must match.'
+                'first_options' => ['label' => 'silex_user.form.password'],
+                'second_options' => ['label' => 'silex_user.form.password_confirmation'],
+                'invalid_message' => 'silex_user.password.mismatch'
             ]);
     }
 

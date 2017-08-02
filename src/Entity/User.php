@@ -50,6 +50,11 @@ abstract class User implements UserInterface
 
     /**
      * @var string
+     */
+    protected $plainPassword;
+
+    /**
+     * @var string
      *
      * @ORM\Column(name="salt", type="string", nullable=true)
      */
@@ -115,6 +120,7 @@ abstract class User implements UserInterface
      */
     public function eraseCredentials()
     {
+        $this->plainPassword = null;
     }
 
     /**
@@ -195,6 +201,24 @@ abstract class User implements UserInterface
     public function getPassword()
     {
         return $this->password;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setPlainPassword($password)
+    {
+        $this->plainPassword = $password;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
     }
 
     /**
