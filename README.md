@@ -153,14 +153,14 @@ create a folder named `silex_user` and put your templates in it.
 Templates for the authentication area go in the `auth` folder and
 templates for emails go in the `email` folder.
 
-You can now set the `silex_user.overwrite_templates` option to `true`.
-This just prevents SilexUser to add the default template directory to Twig paths.
+You can now set the `silex_user.use_templates` option to `false`.
+This just prevents SilexUser to add the default templates directory to Twig paths.
 
 # TODO
+- Commands for creating/removing/updating users
 - Custom routes
 - Change password
 - Authenticate by username or email
-- Events
 - Groups
 - Roles
 - Email activation
@@ -168,5 +168,6 @@ This just prevents SilexUser to add the default template directory to Twig paths
 - Translations
 - UserInterface
 - Configuration
+    - Security
     - Salt generator
     - Email activation

@@ -14,6 +14,7 @@
         "symfony/doctrine-bridge": "^3.3",
         "symfony/form": "^3.3",
         "symfony/security": "^3.3",
+        "symfony/twig-bridge": "^3.3",
         "symfony/validator": "^3.3"
     },
     "autoload": {

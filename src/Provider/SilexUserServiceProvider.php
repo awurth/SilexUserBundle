@@ -11,6 +11,8 @@ use Silex\Api\BootableProviderInterface;
 use Silex\Api\ControllerProviderInterface;
 use Silex\Application;
 use Silex\ControllerCollection;
+use Symfony\Component\Translation\Loader\PhpFileLoader;
+use Symfony\Component\Translation\Translator;
 
 /**
  * Silex User Service Provider.
@@ -30,7 +32,8 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
     public function register(Container $app)
     {
         $app['silex_user.user_class'] = User::class;
-        $app['silex_user.overwrite_templates'] = false;
+        $app['silex_user.use_templates'] = true;
+        $app['silex_user.use_translations'] = true;
 
         $app['auth.controller'] = function ($app) {
             return new AuthController($app);
@@ -52,8 +55,19 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
      */
     public function boot(Application $app)
     {
-        if (false === $app['silex_user.overwrite_templates']) {
-            $app['twig.loader.filesystem']->addPath(__DIR__ . '/../views/');
+        if (true === $app['silex_user.use_templates']) {
+            $app['twig.loader.filesystem']->addPath(__DIR__ . '/../Resources/views/');
+        }
+
+        if (true === $app['silex_user.use_translations']) {
+            $app->extend('translator', function (Translator $translator) {
+                $translator->addLoader('php', new PhpFileLoader());
+
+                $translator->addResource('php', __DIR__ . '/../Resources/translations/en.php', 'en');
+                $translator->addResource('php', __DIR__ . '/../Resources/translations/fr.php', 'fr');
+
+                return $translator;
+            });
         }
     }
 
