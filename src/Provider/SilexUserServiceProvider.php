@@ -32,14 +32,25 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
      */
     public function register(Container $app)
     {
+        // Configuration
         $app['silex_user.user_class'] = User::class;
         $app['silex_user.use_templates'] = true;
         $app['silex_user.use_translations'] = true;
 
+        // Services
         $app['silex_user.user_manager'] = function ($app) {
             return new UserManager($app);
         };
 
+        $app['silex_user.user_provider.username'] = function ($app) {
+            return new UserProvider($app['silex_user.user_manager']);
+        };
+
+        $app['silex_user.user_provider.username_email'] = function ($app) {
+            return new EmailUserProvider($app['silex_user.user_manager']);
+        };
+
+        // Controllers
         $app['auth.controller'] = function ($app) {
             return new AuthController($app);
         };
