@@ -2,7 +2,6 @@
 
 namespace AWurth\SilexUser\Controller;
 
-use AWurth\SilexUser\Entity\User;
 use AWurth\SilexUser\Entity\UserManager;
 use AWurth\SilexUser\Event\FilterUserResponseEvent;
 use AWurth\SilexUser\Event\FormEvent;
@@ -24,12 +23,10 @@ class RegistrationController extends Controller
     {
         /** @var UserManager $userManager */
         $userManager = $this->application['silex_user.user_manager'];
-
         /** @var EventDispatcherInterface $dispatcher */
         $dispatcher = $this->application['dispatcher'];
 
-        /** @var User $user */
-        $user = new $this->application['silex_user.user_class']();
+        $user = $userManager->createUser();
         $user->setEnabled(true);
 
         $event = new GetResponseUserEvent($user, $request);

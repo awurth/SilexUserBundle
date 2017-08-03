@@ -30,6 +30,14 @@ class UserManager implements UserManagerInterface
     /**
      * {@inheritdoc}
      */
+    public function createUser()
+    {
+        return new $this->app['silex_user.user_class']();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function deleteUser(UserInterface $user)
     {
         $em = $this->app['orm.em'];

@@ -5,6 +5,13 @@ namespace AWurth\SilexUser\Entity;
 interface UserManagerInterface
 {
     /**
+     * Creates an empty user instance.
+     *
+     * @return UserInterface
+     */
+    public function createUser();
+
+    /**
      * Deletes a user.
      *
      * @param UserInterface $user
