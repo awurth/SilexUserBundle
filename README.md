@@ -160,7 +160,6 @@ This just prevents SilexUser to add the default templates directory to Twig path
 - Commands for creating/removing/updating users
 - Custom routes
 - Change password
-- Authenticate by username or email
 - Groups
 - Roles
 - Email activation
@@ -169,3 +168,4 @@ This just prevents SilexUser to add the default templates directory to Twig path
     - Security
     - Salt generator
     - Email activation
+    - Log in after registration

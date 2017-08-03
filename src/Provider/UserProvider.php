@@ -2,27 +2,28 @@
 
 namespace AWurth\SilexUser\Provider;
 
-use Silex\Application;
+use AWurth\SilexUser\Entity\UserInterface;
+use AWurth\SilexUser\Entity\UserManagerInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\UserInterface as SecurityUserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
-/**
- * Silex User Provider.
- *
- * @author Alexis Wurth <alexis.wurth57@gmail.com>
- */
 class UserProvider implements UserProviderInterface
 {
     /**
-     * @var Application
+     * @var UserManagerInterface
      */
-    protected $app;
+    protected $userManager;
 
-    public function __construct(Application $app)
+    /**
+     * Constructor.
+     *
+     * @param UserManagerInterface $userManager
+     */
+    public function __construct(UserManagerInterface $userManager)
     {
-        $this->app = $app;
+        $this->userManager = $userManager;
     }
 
     /**
@@ -30,9 +31,7 @@ class UserProvider implements UserProviderInterface
      */
     public function loadUserByUsername($username)
     {
-        $user = $this->app['orm.em']->getRepository($this->app['silex_user.user_class'])->findOneBy([
-            'username' => $username
-        ]);
+        $user = $this->findUser($username);
 
         if (null === $user) {
             throw new UsernameNotFoundException(sprintf('Username "%s" does not exist.', $username));
@@ -44,10 +43,16 @@ class UserProvider implements UserProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function refreshUser(UserInterface $user)
+    public function refreshUser(SecurityUserInterface $user)
     {
-        if (!$user instanceof $this->app['silex_user.user_class']) {
-            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', get_class($user)));
+        $class = get_class($user);
+
+        if (!$user instanceof UserInterface) {
+            throw new UnsupportedUserException(sprintf('Expected an instance of AWurth\SilexUser\Entity\UserInterface, but got "%s".', $class));
+        }
+
+        if (!$this->supportsClass($class)) {
+            throw new UnsupportedUserException(sprintf('Expected an instance of %s, but got "%s".', $this->userManager->getClass(), $class));
         }
 
         return $this->loadUserByUsername($user->getUsername());
@@ -58,6 +63,20 @@ class UserProvider implements UserProviderInterface
      */
     public function supportsClass($class)
     {
-        return $class === $this->app['silex_user.user_class'];
+        $userClass = $this->userManager->getClass();
+
+        return $userClass === $class || is_subclass_of($class, $userClass);
+    }
+
+    /**
+     * Finds a user by username.
+     *
+     * @param string $username
+     *
+     * @return UserInterface|null
+     */
+    protected function findUser($username)
+    {
+        return $this->userManager->findUserByUsername($username);
     }
 }

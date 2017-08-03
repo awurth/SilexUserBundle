@@ -32,7 +32,9 @@ class UserManager implements UserManagerInterface
      */
     public function createUser()
     {
-        return new $this->app['silex_user.user_class']();
+        $class = $this->getClass();
+
+        return new $class();
     }
 
     /**
@@ -88,6 +90,14 @@ class UserManager implements UserManagerInterface
     public function findUsers()
     {
         return $this->getRepository()->findAll();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getClass()
+    {
+        return $this->app['silex_user.user_class'];
     }
 
     /**

@@ -62,6 +62,13 @@ interface UserManagerInterface
     public function findUsers();
 
     /**
+     * Returns the user's fully qualified class name.
+     *
+     * @return string
+     */
+    public function getClass();
+
+    /**
      * Updates a user password if a plain password is set.
      *
      * @param UserInterface $user
