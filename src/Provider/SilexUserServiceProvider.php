@@ -6,6 +6,7 @@ use AWurth\SilexUser\Controller\AuthController;
 use AWurth\SilexUser\Controller\RegistrationController;
 use AWurth\SilexUser\Entity\User;
 use AWurth\SilexUser\Entity\UserManager;
+use AWurth\SilexUser\Security\LoginManager;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
 use Silex\Api\BootableProviderInterface;
@@ -40,6 +41,15 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
         // Services
         $app['silex_user.user_manager'] = function ($app) {
             return new UserManager($app);
+        };
+
+        $app['silex_user.login_manager'] = function ($app) {
+            return new LoginManager(
+                $app['security.token_storage'],
+                $app['security.user_checker'],
+                $app['security.session_strategy'],
+                $app['request_stack']
+            );
         };
 
         $app['silex_user.user_provider.username'] = function ($app) {
