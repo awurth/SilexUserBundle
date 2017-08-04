@@ -6,6 +6,8 @@ use AWurth\SilexUser\Controller\AuthController;
 use AWurth\SilexUser\Controller\RegistrationController;
 use AWurth\SilexUser\Entity\User;
 use AWurth\SilexUser\Entity\UserManager;
+use AWurth\SilexUser\Event\Events;
+use AWurth\SilexUser\Event\FilterUserResponseEvent;
 use AWurth\SilexUser\Security\LoginManager;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
@@ -13,6 +15,8 @@ use Silex\Api\BootableProviderInterface;
 use Silex\Api\ControllerProviderInterface;
 use Silex\Application;
 use Silex\ControllerCollection;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Security\Core\Exception\AccountStatusException;
 use Symfony\Component\Translation\Loader\PhpFileLoader;
 use Symfony\Component\Translation\Translator;
 
@@ -35,6 +39,7 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
     {
         // Configuration
         $app['silex_user.user_class'] = User::class;
+        $app['silex_user.firewall_name'] = 'main';
         $app['silex_user.use_templates'] = true;
         $app['silex_user.use_translations'] = true;
 
@@ -68,6 +73,13 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
         $app['registration.controller'] = function ($app) {
             return new RegistrationController($app);
         };
+        
+        $app->on(Events::REGISTRATION_COMPLETED, function (FilterUserResponseEvent $event, $eventName, EventDispatcherInterface $eventDispatcher) use ($app) {
+            try {
+                $app['silex_user.login_manager']->logInUser($app['silex_user.firewall_name'], $event->getUser(), $event->getResponse());
+            } catch (AccountStatusException $e) {
+            }
+        });
     }
 
     /**
