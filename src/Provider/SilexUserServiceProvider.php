@@ -4,11 +4,11 @@ namespace AWurth\SilexUser\Provider;
 
 use AWurth\SilexUser\Controller\AuthController;
 use AWurth\SilexUser\Controller\RegistrationController;
-use AWurth\SilexUser\Entity\User;
 use AWurth\SilexUser\Entity\UserManager;
 use AWurth\SilexUser\Event\Events;
 use AWurth\SilexUser\Event\FilterUserResponseEvent;
 use AWurth\SilexUser\Security\LoginManager;
+use LogicException;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
 use Silex\Api\BootableProviderInterface;
@@ -38,10 +38,9 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
     public function register(Container $app)
     {
         // Configuration
-        $app['silex_user.user_class'] = User::class;
-        $app['silex_user.firewall_name'] = 'main';
         $app['silex_user.use_templates'] = true;
         $app['silex_user.use_translations'] = true;
+        $app['silex_user.login_after_registration'] = false;
 
         // Services
         $app['silex_user.user_manager'] = function ($app) {
@@ -73,13 +72,6 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
         $app['registration.controller'] = function ($app) {
             return new RegistrationController($app);
         };
-        
-        $app->on(Events::REGISTRATION_COMPLETED, function (FilterUserResponseEvent $event, $eventName, EventDispatcherInterface $eventDispatcher) use ($app) {
-            try {
-                $app['silex_user.login_manager']->logInUser($app['silex_user.firewall_name'], $event->getUser(), $event->getResponse());
-            } catch (AccountStatusException $e) {
-            }
-        });
     }
 
     /**
@@ -93,6 +85,14 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
      */
     public function boot(Application $app)
     {
+        if (!isset($app['silex_user.user_class'])) {
+            throw new LogicException('The "silex_user.user_class" option must be set');
+        }
+
+        if (!isset($app['silex_user.firewall_name'])) {
+            throw new LogicException('The "silex_user.firewall_name" option must be set');
+        }
+
         if (true === $app['silex_user.use_templates']) {
             $app['twig.loader.filesystem']->addPath(__DIR__ . '/../Resources/views/');
         }
@@ -105,6 +105,15 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
 
             $translator->addResource('php', __DIR__ . '/../Resources/translations/en.php', 'en');
             $translator->addResource('php', __DIR__ . '/../Resources/translations/fr.php', 'fr');
+        }
+
+        if (true === $app['silex_user.login_after_registration']) {
+            $app->on(Events::REGISTRATION_COMPLETED, function (FilterUserResponseEvent $event, $eventName, EventDispatcherInterface $eventDispatcher) use ($app) {
+                try {
+                    $app['silex_user.login_manager']->logInUser($app['silex_user.firewall_name'], $event->getUser(), $event->getResponse());
+                } catch (AccountStatusException $e) {
+                }
+            });
         }
     }
 
