@@ -1,5 +1,7 @@
 # SilexUser - User Provider for Silex
 
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/1ec0cb08-4d4f-4dcf-86ff-6512afaf24d5/mini.png)](https://insight.sensiolabs.com/projects/1ec0cb08-4d4f-4dcf-86ff-6512afaf24d5)
+
 Inspired by [Silex User Pack](https://github.com/quazardous/silex-user-pack), [Silex Simple User](https://github.com/jasongrimes/silex-simpleuser) and [FOS User Bundle](https://github.com/FriendsOfSymfony/FOSUserBundle).
 
 See [awurth/silex](https://github.com/awurth/silex) for an example implementation.
@@ -166,6 +168,4 @@ This just prevents SilexUser to add the default templates directory to Twig path
 - Tests
 - Configuration
     - Security
-    - Salt generator
     - Email activation
-    - Log in after registration
