@@ -74,7 +74,7 @@ abstract class User implements UserInterface
      */
     protected $roles = [];
 
-    static public function loadValidatorMetadata(ClassMetadata $metadata)
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
         $metadata->addConstraint(new UniqueEntity([
             'fields' => 'username',

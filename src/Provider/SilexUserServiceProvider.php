@@ -108,10 +108,12 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
         }
 
         if (true === $app['silex_user.login_after_registration']) {
-            $app->on(Events::REGISTRATION_COMPLETED, function (FilterUserResponseEvent $event, $eventName, EventDispatcherInterface $eventDispatcher) use ($app) {
+            $app->on(Events::REGISTRATION_COMPLETED, function (FilterUserResponseEvent $event) use ($app) {
                 try {
                     $app['silex_user.login_manager']->logInUser($app['silex_user.firewall_name'], $event->getUser(), $event->getResponse());
                 } catch (AccountStatusException $e) {
+                    // We simply do not authenticate users which do not pass the user
+                    // checker (not enabled, expired, etc.).
                 }
             });
         }
