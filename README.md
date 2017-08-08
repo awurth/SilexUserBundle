@@ -1,6 +1,6 @@
 # SilexUser - User Provider for Silex
 
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/1ec0cb08-4d4f-4dcf-86ff-6512afaf24d5/mini.png)](https://insight.sensiolabs.com/projects/1ec0cb08-4d4f-4dcf-86ff-6512afaf24d5) [![Total Downloads](https://poser.pugx.org/awurth/silex-user/downloads)](https://packagist.org/packages/awurth/silex-user) [![License](https://poser.pugx.org/awurth/silex-user/license)](https://packagist.org/packages/awurth/silex-user)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/1ec0cb08-4d4f-4dcf-86ff-6512afaf24d5/mini.png)](https://insight.sensiolabs.com/projects/1ec0cb08-4d4f-4dcf-86ff-6512afaf24d5) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/awurth/silex-user/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/awurth/silex-user/?branch=master) [![Total Downloads](https://poser.pugx.org/awurth/silex-user/downloads)](https://packagist.org/packages/awurth/silex-user) [![License](https://poser.pugx.org/awurth/silex-user/license)](https://packagist.org/packages/awurth/silex-user)
 
 Inspired by [Silex User Pack](https://github.com/quazardous/silex-user-pack), [Silex Simple User](https://github.com/jasongrimes/silex-simpleuser) and [FOS User Bundle](https://github.com/FriendsOfSymfony/FOSUserBundle).
 
