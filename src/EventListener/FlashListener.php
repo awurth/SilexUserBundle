@@ -15,7 +15,7 @@ class FlashListener implements EventSubscriberInterface
      * @var array
      */
     protected static $successMessages = [
-        Events::REGISTRATION_COMPLETED => 'registration.flash.user_created'
+        Events::REGISTRATION_COMPLETED => 'silex_user.registration.flash.user_created'
     ];
 
     /**
