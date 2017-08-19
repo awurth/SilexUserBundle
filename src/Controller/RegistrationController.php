@@ -127,6 +127,8 @@ class RegistrationController extends Controller
             throw new AccessDeniedException('This user does not have access to this section.');
         }
 
-        return $this->render('silex_user/registration/confirmed.twig');
+        return $this->render('silex_user/registration/confirmed.twig', [
+            'user' => $user
+        ]);
     }
 }

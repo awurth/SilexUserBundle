@@ -21,7 +21,7 @@ return [
                     the Team.'
             ],
             'confirmed' => [
-                'message' => 'Your account has been created successfully.',
+                'message' => 'Congrats %username%, your account is now activated.',
                 'title' => 'Registration confirmed'
             ],
             'flash' => [
