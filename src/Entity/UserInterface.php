@@ -87,4 +87,20 @@ interface UserInterface extends AdvancedUserInterface
      * @return self
      */
     public function setRoles(array $roles);
+
+    /**
+     * Gets the confirmation token.
+     *
+     * @return string
+     */
+    public function getConfirmationToken();
+
+    /**
+     * Sets the confirmation token.
+     *
+     * @param string $token
+     *
+     * @return self
+     */
+    public function setConfirmationToken($token);
 }

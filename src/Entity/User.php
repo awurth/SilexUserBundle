@@ -74,6 +74,13 @@ abstract class User implements UserInterface
      */
     protected $roles = [];
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="confirmation_token", type="string", unique=true, nullable=true)
+     */
+    protected $confirmationToken;
+
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
         $metadata->addConstraint(new UniqueEntity([
@@ -259,5 +266,23 @@ abstract class User implements UserInterface
         $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setConfirmationToken($token)
+    {
+        $this->confirmationToken = $token;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getConfirmationToken()
+    {
+        return $this->confirmationToken;
     }
 }
