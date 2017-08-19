@@ -21,5 +21,11 @@
         "psr-4": {
             "AWurth\\SilexUser\\": "src/"
         }
+    },
+    "require-dev": {
+        "swiftmailer/swiftmailer": "^6.0"
+    },
+    "suggest": {
+        "swiftmailer/swiftmailer": "Use SwiftMailer for sending emails"
     }
 }
