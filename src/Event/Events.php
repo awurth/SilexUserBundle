@@ -16,4 +16,8 @@ class Events
     const REGISTRATION_FAILURE = 'silex_user.registration.failure';
 
     const REGISTRATION_COMPLETED = 'silex_user.registration.completed';
+
+    const REGISTRATION_CONFIRM = 'silex_user.registration.confirm';
+
+    const REGISTRATION_CONFIRMED = 'silex_user.registration.confirmed';
 }
