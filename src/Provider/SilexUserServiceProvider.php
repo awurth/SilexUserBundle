@@ -7,6 +7,9 @@ use AWurth\SilexUser\Controller\RegistrationController;
 use AWurth\SilexUser\Entity\UserManager;
 use AWurth\SilexUser\Event\Events;
 use AWurth\SilexUser\Event\FilterUserResponseEvent;
+use AWurth\SilexUser\EventListener\EmailConfirmationListener;
+use AWurth\SilexUser\EventListener\FlashListener;
+use AWurth\SilexUser\Mailer\TwigSwiftMailer;
 use AWurth\SilexUser\Security\LoginManager;
 use LogicException;
 use Pimple\Container;
@@ -15,7 +18,6 @@ use Silex\Api\BootableProviderInterface;
 use Silex\Api\ControllerProviderInterface;
 use Silex\Application;
 use Silex\ControllerCollection;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\Exception\AccountStatusException;
 use Symfony\Component\Translation\Loader\PhpFileLoader;
 use Symfony\Component\Translation\Translator;
@@ -40,7 +42,10 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
         // Configuration
         $app['silex_user.use_templates'] = true;
         $app['silex_user.use_translations'] = true;
+        $app['silex_user.use_flash_notifications'] = true;
         $app['silex_user.login_after_registration'] = false;
+        $app['silex_user.registration.confirmation.enable'] = false;
+        $app['silex_user.registration.confirmation.from_email'] = null;
 
         // Services
         $app['silex_user.user_manager'] = function ($app) {
@@ -62,6 +67,20 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
 
         $app['silex_user.user_provider.username_email'] = function ($app) {
             return new EmailUserProvider($app['silex_user.user_manager']);
+        };
+
+        $app['silex_user.mailer'] = function ($app) {
+            if (isset($app['mailer']) && get_class($app['mailer']) === 'Swift_Mailer') {
+                $parameters = [
+                    'from_email' => [
+                        'confirmation' => $app['silex_user.registration.confirmation.from_email']
+                    ]
+                ];
+
+                return new TwigSwiftMailer($app['mailer'], $app['twig'], $app['url_generator'], $parameters);
+            }
+
+            return null;
         };
 
         // Controllers
@@ -117,6 +136,14 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
                 }
             });
         }
+
+        if (true === $app['silex_user.use_flash_notifications']) {
+            $app['dispatcher']->addSubscriber(new FlashListener($app['session'], $app['translator']));
+        }
+
+        if (true === $app['silex_user.registration.confirmation.enable']) {
+            $app['dispatcher']->addSubscriber(new EmailConfirmationListener($app['silex_user.mailer'], $app['url_generator'], $app['session']));
+        }
     }
 
     /**
@@ -140,6 +167,14 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
 
         $controllers->get('/register/confirmed', 'registration.controller:confirmedAction')
             ->bind('silex_user.registration_confirmed');
+
+        if (true === $app['silex_user.registration.confirmation.enable']) {
+            $controllers->get('/register/check-email', 'registration.controller:checkEmail')
+                ->bind('silex_user.registration_check_email');
+
+            $controllers->get('/register/confirm/{token}', 'registration.controller:confirmAction')
+                ->bind('silex_user.registration_confirm');
+        }
 
         return $controllers;
     }
