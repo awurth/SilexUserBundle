@@ -6,7 +6,6 @@ use AWurth\SilexUser\Entity\UserInterface;
 use AWurth\SilexUser\Event\Events;
 use AWurth\SilexUser\Event\FormEvent;
 use AWurth\SilexUser\Mailer\MailerInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
