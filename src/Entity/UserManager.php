@@ -87,6 +87,14 @@ class UserManager implements UserManagerInterface
     /**
      * {@inheritdoc}
      */
+    public function findUserByConfirmationToken($token)
+    {
+        return $this->findUserBy(['confirmationToken' => $token]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function findUsers()
     {
         return $this->getRepository()->findAll();

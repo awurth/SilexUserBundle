@@ -23,7 +23,7 @@ interface UserManagerInterface
      *
      * @param array $criteria
      *
-     * @return null|UserInterface
+     * @return UserInterface|null
      */
     public function findUserBy(array $criteria);
 
@@ -32,7 +32,7 @@ interface UserManagerInterface
      *
      * @param string $email
      *
-     * @return null|UserInterface
+     * @return UserInterface|null
      */
     public function findUserByEmail($email);
 
@@ -41,7 +41,7 @@ interface UserManagerInterface
      *
      * @param string $username
      *
-     * @return null|UserInterface
+     * @return UserInterface|null
      */
     public function findUserByUsername($username);
 
@@ -50,9 +50,18 @@ interface UserManagerInterface
      *
      * @param string $usernameOrEmail
      *
-     * @return null|UserInterface
+     * @return UserInterface|null
      */
     public function findUserByUsernameOrEmail($usernameOrEmail);
+
+    /**
+     * Finds a user by its confirmation token.
+     *
+     * @param string $token
+     *
+     * @return UserInterface|null
+     */
+    public function findUserByConfirmationToken($token);
 
     /**
      * Returns a collection with all user instances.
