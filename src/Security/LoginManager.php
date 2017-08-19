@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Http\RememberMe\RememberMeServicesInterface;
 use Symfony\Component\Security\Http\Session\SessionAuthenticationStrategyInterface;
 
-class LoginManager
+class LoginManager implements LoginManagerInterface
 {
     /**
      * @var TokenStorageInterface
@@ -60,9 +60,7 @@ class LoginManager
     }
 
     /**
-     * @param string        $firewallName
-     * @param UserInterface $user
-     * @param Response|null $response
+     * {@inheritdoc}
      */
     public function logInUser($firewallName, UserInterface $user, Response $response = null)
     {
