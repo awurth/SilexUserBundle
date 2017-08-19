@@ -2,11 +2,16 @@
 
 namespace AWurth\SilexUser\Controller;
 
+use AWurth\SilexUser\Entity\UserInterface;
+use AWurth\SilexUser\Entity\UserManagerInterface;
 use Doctrine\ORM\EntityManager;
 use Silex\Application;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 class Controller
 {
@@ -15,13 +20,42 @@ class Controller
      */
     protected $application;
 
+    /**
+     * Constructor.
+     *
+     * @param Application $app
+     */
     public function __construct(Application $app)
     {
         $this->application = $app;
     }
 
     /**
-     * Get Doctrine Entity Manager.
+     * Creates a new form.
+     *
+     * @param string $type
+     * @param mixed $data
+     * @param array $options
+     *
+     * @return FormInterface
+     */
+    public function createForm($type, $data = null, array $options = [])
+    {
+        return $this->application['form.factory']->create($type, $data, $options);
+    }
+
+    /**
+     * Gets the event dispatcher.
+     *
+     * @return EventDispatcherInterface
+     */
+    public function getDispatcher()
+    {
+        return $this->application['dispatcher'];
+    }
+
+    /**
+     * Gets Doctrine Entity Manager.
      *
      * @return EntityManager
      */
@@ -31,15 +65,44 @@ class Controller
     }
 
     /**
-     * Get current authenticated user.
+     * Gets the session.
+     *
+     * @return SessionInterface
+     */
+    public function getSession()
+    {
+        return $this->application['session'];
+    }
+
+    /**
+     * Gets the user manager.
+     *
+     * @return UserManagerInterface
+     */
+    public function getUserManager()
+    {
+        return $this->application['silex_user.user_manager'];
+    }
+
+    /**
+     * Gets a user from the Security Token Storage.
      *
      * @return UserInterface|null
      */
     public function getUser()
     {
+        /** @var TokenInterface $token */
         $token = $this->application['security.token_storage']->getToken();
+        if (null === $token) {
+            return null;
+        }
 
-        return null !== $token ? $token->getUser() : null;
+        $user = $token->getUser();
+        if (!is_object($user)) {
+            return null;
+        }
+
+        return $user;
     }
 
     /**
@@ -56,7 +119,7 @@ class Controller
     }
 
     /**
-     * Redirect the user to another route.
+     * Redirects the user to another route.
      *
      * @param string $route The route to redirect to
      * @param array $parameters An array of parameters
@@ -70,7 +133,7 @@ class Controller
     }
 
     /**
-     * Render a template.
+     * Renders a template.
      *
      * @param string $name The template name
      * @param array $context An array of parameters to pass to the template
