@@ -15,8 +15,10 @@ use Pimple\Container;
 use Pimple\ServiceProviderInterface;
 use Silex\Api\BootableProviderInterface;
 use Silex\Api\ControllerProviderInterface;
+use Silex\Api\EventListenerProviderInterface;
 use Silex\Application;
 use Silex\ControllerCollection;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Translation\Loader\PhpFileLoader;
 use Symfony\Component\Translation\Translator;
 
@@ -25,15 +27,10 @@ use Symfony\Component\Translation\Translator;
  *
  * @author Alexis Wurth <alexis.wurth57@gmail.com>
  */
-class SilexUserServiceProvider implements ServiceProviderInterface, BootableProviderInterface, ControllerProviderInterface
+class SilexUserServiceProvider implements ServiceProviderInterface, BootableProviderInterface, ControllerProviderInterface, EventListenerProviderInterface
 {
     /**
-     * Register SilexUser service.
-     *
-     * This method should only be used to configure services and parameters.
-     * It should not get services.
-     *
-     * @param Container $app A container instance
+     * {@inheritdoc}
      */
     public function register(Container $app)
     {
@@ -92,13 +89,7 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
     }
 
     /**
-     * Bootstraps the application.
-     *
-     * This method is called after all services are registered
-     * and should be used for "dynamic" configuration (whenever
-     * a service must be requested).
-     *
-     * @param Application $app
+     * {@inheritdoc}
      */
     public function boot(Application $app)
     {
@@ -110,8 +101,14 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
             throw new LogicException('The "silex_user.firewall_name" option must be set');
         }
 
-        if (true === $app['silex_user.registration.confirmation.enable'] && null === $app['silex_user.mailer']) {
-            throw new LogicException('You must configure a mailer to enable email notifications');
+        if (true === $app['silex_user.registration.confirmation.enable']) {
+            if (null === $app['silex_user.mailer']) {
+                throw new LogicException('You must configure a mailer to enable email notifications');
+            }
+
+            if (empty($app['silex_user.registration.confirmation.from_email'])) {
+                throw new LogicException('The "silex_user.registration.confirmation.from_email" must be set');
+            }
         }
 
         if (true === $app['silex_user.use_templates']) {
@@ -127,26 +124,10 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
             $translator->addResource('php', __DIR__ . '/../Resources/translations/en.php', 'en');
             $translator->addResource('php', __DIR__ . '/../Resources/translations/fr.php', 'fr');
         }
-
-        if (true === $app['silex_user.login_after_registration']) {
-            $app['dispatcher']->addSubscriber(new AuthenticationListener($app['silex_user.login_manager'], $app['silex_user.firewall_name']));
-        }
-
-        if (true === $app['silex_user.use_flash_notifications']) {
-            $app['dispatcher']->addSubscriber(new FlashListener($app['session'], $app['translator']));
-        }
-
-        if (true === $app['silex_user.registration.confirmation.enable']) {
-            $app['dispatcher']->addSubscriber(new EmailConfirmationListener($app['silex_user.mailer'], $app['url_generator'], $app['session']));
-        }
     }
 
     /**
-     * Returns routes to connect to the given application.
-     *
-     * @param Application $app An Application instance
-     *
-     * @return ControllerCollection A ControllerCollection instance
+     * {@inheritdoc}
      */
     public function connect(Application $app)
     {
@@ -172,5 +153,23 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
         }
 
         return $controllers;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function subscribe(Container $app, EventDispatcherInterface $dispatcher)
+    {
+        if (true === $app['silex_user.use_authentication_listener']) {
+            $dispatcher->addSubscriber(new AuthenticationListener($app['silex_user.login_manager'], $app['silex_user.firewall_name']));
+        }
+
+        if (true === $app['silex_user.use_flash_notifications']) {
+            $dispatcher->addSubscriber(new FlashListener($app['session'], $app['translator']));
+        }
+
+        if (true === $app['silex_user.registration.confirmation.enable']) {
+            $dispatcher->addSubscriber(new EmailConfirmationListener($app['silex_user.mailer'], $app['url_generator'], $app['session']));
+        }
     }
 }
