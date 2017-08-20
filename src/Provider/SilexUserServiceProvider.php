@@ -173,7 +173,7 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
             ->bind('silex_user.registration_confirmed');
 
         if (true === $app['silex_user.registration.confirmation.enable']) {
-            $controllers->get('/register/check-email', 'registration.controller:checkEmail')
+            $controllers->get('/register/check-email', 'registration.controller:checkEmailAction')
                 ->bind('silex_user.registration_check_email');
 
             $controllers->get('/register/confirm/{token}', 'registration.controller:confirmAction')
