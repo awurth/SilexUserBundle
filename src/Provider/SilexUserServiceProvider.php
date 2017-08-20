@@ -112,6 +112,10 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
             throw new LogicException('The "silex_user.firewall_name" option must be set');
         }
 
+        if (true === $app['silex_user.registration.confirmation.enable'] && null === $app['silex_user.mailer']) {
+            throw new LogicException('You must configure a mailer to enable email notifications');
+        }
+
         if (true === $app['silex_user.use_templates']) {
             $app['twig.loader.filesystem']->addPath(__DIR__ . '/../Resources/views/');
         }
