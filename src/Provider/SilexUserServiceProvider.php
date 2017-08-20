@@ -5,8 +5,7 @@ namespace AWurth\SilexUser\Provider;
 use AWurth\SilexUser\Controller\AuthController;
 use AWurth\SilexUser\Controller\RegistrationController;
 use AWurth\SilexUser\Entity\UserManager;
-use AWurth\SilexUser\Event\Events;
-use AWurth\SilexUser\Event\FilterUserResponseEvent;
+use AWurth\SilexUser\EventListener\AuthenticationListener;
 use AWurth\SilexUser\EventListener\EmailConfirmationListener;
 use AWurth\SilexUser\EventListener\FlashListener;
 use AWurth\SilexUser\Mailer\TwigSwiftMailer;
@@ -18,7 +17,6 @@ use Silex\Api\BootableProviderInterface;
 use Silex\Api\ControllerProviderInterface;
 use Silex\Application;
 use Silex\ControllerCollection;
-use Symfony\Component\Security\Core\Exception\AccountStatusException;
 use Symfony\Component\Translation\Loader\PhpFileLoader;
 use Symfony\Component\Translation\Translator;
 
@@ -131,14 +129,7 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
         }
 
         if (true === $app['silex_user.login_after_registration']) {
-            $app->on(Events::REGISTRATION_COMPLETED, function (FilterUserResponseEvent $event) use ($app) {
-                try {
-                    $app['silex_user.login_manager']->logInUser($app['silex_user.firewall_name'], $event->getUser(), $event->getResponse());
-                } catch (AccountStatusException $e) {
-                    // We simply do not authenticate users which do not pass the user
-                    // checker (not enabled, expired, etc.).
-                }
-            });
+            $app['dispatcher']->addSubscriber(new AuthenticationListener($app['silex_user.login_manager'], $app['silex_user.firewall_name']));
         }
 
         if (true === $app['silex_user.use_flash_notifications']) {
