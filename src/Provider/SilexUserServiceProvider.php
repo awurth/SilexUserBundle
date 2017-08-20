@@ -43,7 +43,7 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
         $app['silex_user.use_templates'] = true;
         $app['silex_user.use_translations'] = true;
         $app['silex_user.use_flash_notifications'] = true;
-        $app['silex_user.login_after_registration'] = false;
+        $app['silex_user.use_authentication_listener'] = false;
         $app['silex_user.registration.confirmation.enable'] = false;
         $app['silex_user.registration.confirmation.from_email'] = null;
 
