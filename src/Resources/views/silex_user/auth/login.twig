@@ -4,7 +4,7 @@
 
 {% block body %}
 
-<form action="{{ path('login_check') }}" method="post">
+<form action="{{ path('silex_user.login_check') }}" method="post">
     {{ error }}
     <div>
         <label for="username">{{ 'silex_user.form.username'|trans }}</label>
