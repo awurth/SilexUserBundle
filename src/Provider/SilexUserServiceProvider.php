@@ -34,6 +34,10 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
      */
     public function register(Container $app)
     {
+        if (!isset($app['twig'])) {
+            throw new LogicException('You must register the TwigServiceProvider to use the SilexUserServiceProvider');
+        }
+
         // Configuration
         $app['silex_user.use_templates'] = true;
         $app['silex_user.use_translations'] = true;
