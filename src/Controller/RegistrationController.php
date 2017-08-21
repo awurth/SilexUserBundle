@@ -9,6 +9,7 @@ use AWurth\SilexUser\Event\GetResponseUserEvent;
 use AWurth\SilexUser\Event\Events;
 use AWurth\SilexUser\Form\RegistrationFormType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
@@ -69,6 +70,9 @@ class RegistrationController extends Controller
         ]);
     }
 
+    /**
+     * Tell the user to check their email provider.
+     */
     public function checkEmailAction()
     {
         $session = $this->getSession();
@@ -90,6 +94,14 @@ class RegistrationController extends Controller
         ]);
     }
 
+    /**
+     * Receive the confirmation token from user email provider and login the user.
+     *
+     * @param Request $request
+     * @param string $token
+     *
+     * @return Response
+     */
     public function confirmAction(Request $request, $token)
     {
         $userManager = $this->getUserManager();
@@ -120,6 +132,9 @@ class RegistrationController extends Controller
         return $response;
     }
 
+    /**
+     * Tell the user their account is confirmed.
+     */
     public function confirmedAction()
     {
         $user = $this->getUser();
