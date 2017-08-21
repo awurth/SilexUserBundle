@@ -202,6 +202,10 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
      */
     protected function getOption(Container $app, $name)
     {
-        return isset($app['silex_user.options'][$name]) ? $app['silex_user.options'][$name] : self::$defaultOptions[$name];
+        if (isset($app['silex_user.options'][$name])) {
+            return $app['silex_user.options'][$name];
+        } else {
+            return self::$defaultOptions[$name];
+        }
     }
 }
