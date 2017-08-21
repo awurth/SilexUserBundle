@@ -24,7 +24,7 @@ class UserManager implements UserManagerInterface
      */
     protected function getRepository()
     {
-        return $this->app['orm.em']->getRepository($this->app['silex_user.user_class']);
+        return $this->app['orm.em']->getRepository($this->getClass());
     }
 
     /**
@@ -105,7 +105,7 @@ class UserManager implements UserManagerInterface
      */
     public function getClass()
     {
-        return $this->app['silex_user.user_class'];
+        return $this->app['silex_user.options']['user_class'];
     }
 
     /**
