@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
@@ -85,17 +86,40 @@ abstract class User implements UserInterface
     {
         $metadata->addConstraint(new UniqueEntity([
             'fields' => 'username',
-            'message' => 'This username is already taken.'
+            'message' => 'silex_user.username.already_used'
         ]));
         $metadata->addConstraint(new UniqueEntity([
             'fields' => 'email',
-            'message' => 'This email address is already used.'
+            'message' => 'silex_user.email.already_used'
         ]));
 
-        $metadata->addPropertyConstraint('username', new Length(['min' => 3, 'max' => 20]));
-        $metadata->addPropertyConstraint('username', new Regex(['pattern' => '/^[a-z0-9._-]+$/i']));
-        $metadata->addPropertyConstraint('email', new Email());
-        $metadata->addPropertyConstraint('password', new Length(['min' => 8, 'max' => 32]));
+        $metadata->addPropertyConstraint('username', new NotBlank(['message' => 'silex_user.username.blank']));
+        $metadata->addPropertyConstraint('username', new Length([
+            'min' => 3,
+            'max' => 20,
+            'minMessage' => 'silex_user.username.short',
+            'maxMessage' => 'silex_user.username.long'
+        ]));
+        $metadata->addPropertyConstraint('username', new Regex([
+            'pattern' => '/^[a-z0-9._-]+$/i',
+            'message' => 'silex_user.username.invalid'
+        ]));
+
+        $metadata->addPropertyConstraint('email', new NotBlank(['message' => 'silex_user.username.blank']));
+        $metadata->addPropertyConstraint('email', new Length([
+            'max' => 100,
+            'maxMessage' => 'silex_user.email.long'
+        ]));
+        $metadata->addPropertyConstraint('email', new Email(['message' => 'silex_user.email.invalid']));
+
+
+        $metadata->addPropertyConstraint('password', new NotBlank(['message' => 'silex_user.password.blank']));
+        $metadata->addPropertyConstraint('password', new Length([
+            'min' => 8,
+            'max' => 32,
+            'minMessage' => 'silex_user.password.short',
+            'maxMessage' => 'silex_user.password.long'
+        ]));
     }
 
     /**
