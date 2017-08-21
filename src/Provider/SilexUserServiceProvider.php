@@ -123,6 +123,8 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
 
             $translator->addResource('php', __DIR__ . '/../Resources/translations/en.php', 'en');
             $translator->addResource('php', __DIR__ . '/../Resources/translations/fr.php', 'fr');
+            $translator->addResource('php', __DIR__ . '/../Resources/translations/validators.en.php', 'en', 'validators');
+            $translator->addResource('php', __DIR__ . '/../Resources/translations/validators.fr.php', 'fr', 'validators');
         }
     }
 
