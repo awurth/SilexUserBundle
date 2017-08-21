@@ -36,7 +36,8 @@ return [
         'global' => [
             'login' => 'Log in',
             'logout' => 'Log out',
-            'register' => 'Register'
+            'register' => 'Register',
+            'logged_in_as' => 'Logged in as %username%'
         ]
     ]
 ];

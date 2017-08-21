@@ -36,7 +36,8 @@ return [
         'global' => [
             'login' => 'Connexion',
             'logout' => 'Déconnexion',
-            'register' => 'Inscription'
+            'register' => 'Inscription',
+            'logged_in_as' => 'Connecté en tant que %username%'
         ]
     ]
 ];

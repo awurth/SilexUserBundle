@@ -5,6 +5,17 @@
     <title>{% block title %}Silex User{% endblock %}</title>
 </head>
 <body>
+    <div>
+        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            {{ 'silex_user.global.logged_in_as'|trans({'%username%': app.user.username}) }} |
+            <a href="{{ path('silex_user.logout') }}">
+                {{ 'silex_user.global.logout'|trans }}
+            </a>
+        {% else %}
+            <a href="{{ path('silex_user.login') }}">{{ 'silex_user.global.login'|trans }}</a>
+        {% endif %}
+    </div>
+
     {% if app.request.hasPreviousSession %}
         {% for type, messages in app.session.flashbag.all() %}
             {% for message in messages %}
