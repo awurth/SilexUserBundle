@@ -112,9 +112,8 @@ abstract class User implements UserInterface
         ]));
         $metadata->addPropertyConstraint('email', new Email(['message' => 'silex_user.email.invalid']));
 
-
-        $metadata->addPropertyConstraint('password', new NotBlank(['message' => 'silex_user.password.blank']));
-        $metadata->addPropertyConstraint('password', new Length([
+        $metadata->addPropertyConstraint('plainPassword', new NotBlank(['message' => 'silex_user.password.blank']));
+        $metadata->addPropertyConstraint('plainPassword', new Length([
             'min' => 8,
             'max' => 32,
             'minMessage' => 'silex_user.password.short',
