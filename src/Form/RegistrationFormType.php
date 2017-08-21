@@ -22,8 +22,8 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username', TextType::class)
-            ->add('email', EmailType::class)
+            ->add('username', TextType::class, ['label' => 'silex_user.form.username'])
+            ->add('email', EmailType::class, ['label' => 'silex_user.form.email'])
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'first_name' => 'password',

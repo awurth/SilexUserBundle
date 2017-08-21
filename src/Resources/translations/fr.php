@@ -29,6 +29,7 @@ return [
             ]
         ],
         'form' => [
+            'email' => 'Adresse email',
             'username' => 'Nom d\'utilisateur',
             'password' => 'Mot de passe',
             'password_confirmation' => 'Répéter le mot de passe'

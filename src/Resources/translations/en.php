@@ -29,6 +29,7 @@ return [
             ]
         ],
         'form' => [
+            'email' => 'Email',
             'username' => 'Username',
             'password' => 'Password',
             'password_confirmation' => 'Repeat password'
