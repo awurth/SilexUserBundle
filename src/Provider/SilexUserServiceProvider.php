@@ -38,13 +38,7 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
             throw new LogicException('You must register the TwigServiceProvider to use the SilexUserServiceProvider');
         }
 
-        // Configuration
-        $app['silex_user.use_templates'] = true;
-        $app['silex_user.use_translations'] = true;
-        $app['silex_user.use_flash_notifications'] = true;
-        $app['silex_user.use_authentication_listener'] = false;
-        $app['silex_user.registration.confirmation.enable'] = false;
-        $app['silex_user.registration.confirmation.from_email'] = null;
+        $app['silex_user.options'] = [];
 
         // Services
         $app['silex_user.user_manager'] = function ($app) {
@@ -72,7 +66,7 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
             if (isset($app['mailer']) && get_class($app['mailer']) === 'Swift_Mailer') {
                 $parameters = [
                     'from_email' => [
-                        'confirmation' => $app['silex_user.registration.confirmation.from_email']
+                        'confirmation' => $app['silex_user.options']['registration']['confirmation']['from_email']
                     ]
                 ];
 
@@ -97,29 +91,42 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
      */
     public function boot(Application $app)
     {
-        if (!isset($app['silex_user.user_class'])) {
-            throw new LogicException('The "silex_user.user_class" option must be set');
+        $app['silex_user.options'] = array_replace_recursive([
+            'use_templates' => true,
+            'use_translations' => true,
+            'use_flash_notifications' => true,
+            'use_authentication_listener' => false,
+            'registration' => [
+                'confirmation' => [
+                    'enabled' => false,
+                    'from_email' => null
+                ]
+            ]
+        ], $app['silex_user.options']);
+
+        if (!isset($app['silex_user.options']['user_class'])) {
+            throw new LogicException('The "user_class" option must be set');
         }
 
-        if (!isset($app['silex_user.firewall_name'])) {
-            throw new LogicException('The "silex_user.firewall_name" option must be set');
+        if (!isset($app['silex_user.options']['firewall_name'])) {
+            throw new LogicException('The "firewall_name" option must be set');
         }
 
-        if (true === $app['silex_user.registration.confirmation.enable']) {
+        if (true === $app['silex_user.options']['registration']['confirmation']['enabled']) {
             if (null === $app['silex_user.mailer']) {
                 throw new LogicException('You must configure a mailer to enable email notifications');
             }
 
-            if (empty($app['silex_user.registration.confirmation.from_email'])) {
-                throw new LogicException('The "silex_user.registration.confirmation.from_email" must be set');
+            if (empty($app['silex_user.options']['registration']['confirmation']['from_email'])) {
+                throw new LogicException('The "registration.confirmation.from_email" option must be set');
             }
         }
 
-        if (true === $app['silex_user.use_templates']) {
+        if (true === $app['silex_user.options']['use_templates']) {
             $app['twig.loader.filesystem']->addPath(__DIR__ . '/../Resources/views/');
         }
 
-        if (true === $app['silex_user.use_translations']) {
+        if (true === $app['silex_user.options']['use_translations']) {
             /** @var Translator $translator */
             $translator = $app['translator'];
 
@@ -158,7 +165,7 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
         $controllers->get('/register/confirmed', 'registration.controller:confirmedAction')
             ->bind('silex_user.registration_confirmed');
 
-        if (true === $app['silex_user.registration.confirmation.enable']) {
+        if (true === $app['silex_user.options']['registration']['confirmation']['enabled']) {
             $controllers->get('/register/check-email', 'registration.controller:checkEmailAction')
                 ->bind('silex_user.registration_check_email');
 
@@ -174,15 +181,15 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
      */
     public function subscribe(Container $app, EventDispatcherInterface $dispatcher)
     {
-        if (true === $app['silex_user.use_authentication_listener']) {
+        if (true === $app['silex_user.options']['use_authentication_listener']) {
             $dispatcher->addSubscriber(new AuthenticationListener($app['silex_user.login_manager'], $app['silex_user.firewall_name']));
         }
 
-        if (true === $app['silex_user.use_flash_notifications']) {
+        if (true === $app['silex_user.options']['use_flash_notifications']) {
             $dispatcher->addSubscriber(new FlashListener($app['session'], $app['translator']));
         }
 
-        if (true === $app['silex_user.registration.confirmation.enable']) {
+        if (true === $app['silex_user.options']['registration']['confirmation']['enabled']) {
             $dispatcher->addSubscriber(new EmailConfirmationListener($app['silex_user.mailer'], $app['url_generator'], $app['session']));
         }
     }
