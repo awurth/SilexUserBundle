@@ -22,14 +22,15 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username', TextType::class, ['label' => 'silex_user.form.username'])
-            ->add('email', EmailType::class, ['label' => 'silex_user.form.email'])
+            ->add('username', TextType::class, ['label' => 'form.username', 'translation_domain' => 'silex_user'])
+            ->add('email', EmailType::class, ['label' => 'form.email', 'translation_domain' => 'silex_user'])
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
+                'options' => ['translation_domain' => 'silex_user'],
                 'first_name' => 'password',
                 'second_name' => 'confirm_password',
-                'first_options' => ['label' => 'silex_user.form.password'],
-                'second_options' => ['label' => 'silex_user.form.password_confirmation'],
+                'first_options' => ['label' => 'form.password'],
+                'second_options' => ['label' => 'form.password_confirmation'],
                 'invalid_message' => 'silex_user.password.mismatch'
             ]);
     }
