@@ -7,12 +7,12 @@
 <body>
     <div>
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-            {{ 'silex_user.global.logged_in_as'|trans({'%username%': app.user.username}) }} |
+            {{ 'global.logged_in_as'|trans({'%username%': app.user.username}, 'silex_user') }} |
             <a href="{{ path('silex_user.logout') }}">
-                {{ 'silex_user.global.logout'|trans }}
+                {{ 'global.logout'|trans({}, 'silex_user') }}
             </a>
         {% else %}
-            <a href="{{ path('silex_user.login') }}">{{ 'silex_user.global.login'|trans }}</a>
+            <a href="{{ path('silex_user.login') }}">{{ 'global.login'|trans({}, 'silex_user') }}</a>
         {% endif %}
     </div>
 
