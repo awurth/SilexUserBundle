@@ -122,19 +122,20 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
         }
 
         if (true === $this->getOption($app, 'use_templates')) {
-            $app['twig.loader.filesystem']->addPath(__DIR__ . '/../Resources/views/');
+            $app['twig.loader.filesystem']->addPath(dirname(__DIR__) . '/Resources/views/');
         }
 
         if (true === $this->getOption($app, 'use_translations')) {
             /** @var Translator $translator */
             $translator = $app['translator'];
+            $translationsDir = dirname(__DIR__) . '/Resources/translations';
 
             $translator->addLoader('php', new PhpFileLoader());
 
-            $translator->addResource('php', __DIR__ . '/../Resources/translations/silex_user.en.php', 'en', 'silex_user');
-            $translator->addResource('php', __DIR__ . '/../Resources/translations/silex_user.fr.php', 'fr', 'silex_user');
-            $translator->addResource('php', __DIR__ . '/../Resources/translations/validators.en.php', 'en', 'validators');
-            $translator->addResource('php', __DIR__ . '/../Resources/translations/validators.fr.php', 'fr', 'validators');
+            $translator->addResource('php', $translationsDir . '/silex_user.en.php', 'en', 'silex_user');
+            $translator->addResource('php', $translationsDir . '/silex_user.fr.php', 'fr', 'silex_user');
+            $translator->addResource('php', $translationsDir . '/validators.en.php', 'en', 'validators');
+            $translator->addResource('php', $translationsDir . '/validators.fr.php', 'fr', 'validators');
         }
 
         if (true === $this->getOption($app, 'use_routes')) {
