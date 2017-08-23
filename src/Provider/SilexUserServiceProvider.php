@@ -30,6 +30,7 @@ use Symfony\Component\Translation\Translator;
 class SilexUserServiceProvider implements ServiceProviderInterface, BootableProviderInterface, ControllerProviderInterface, EventListenerProviderInterface
 {
     protected static $defaultOptions = [
+        'use_routes' => true,
         'use_templates' => true,
         'use_translations' => true,
         'use_flash_notifications' => true,
@@ -134,6 +135,10 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
             $translator->addResource('php', __DIR__ . '/../Resources/translations/silex_user.fr.php', 'fr', 'silex_user');
             $translator->addResource('php', __DIR__ . '/../Resources/translations/validators.en.php', 'en', 'validators');
             $translator->addResource('php', __DIR__ . '/../Resources/translations/validators.fr.php', 'fr', 'validators');
+        }
+
+        if (true === $this->getOption($app, 'use_routes')) {
+            $app->mount('/', $this->connect($app));
         }
     }
 
