@@ -18,6 +18,7 @@ use Silex\Api\ControllerProviderInterface;
 use Silex\Api\EventListenerProviderInterface;
 use Silex\Application;
 use Silex\ControllerCollection;
+use Silex\ServiceControllerResolver;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Translation\Loader\PhpFileLoader;
 use Symfony\Component\Translation\Translator;
@@ -39,13 +40,29 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
         'registration.confirmation.from_email' => ''
     ];
 
+    protected static $dependencies = [
+        'twig' => 'TwigServiceProvider',
+        'session' => 'SessionServiceProvider',
+        'translator' => 'TranslationServiceProvider',
+        'validator' => 'ValidatorServiceProvider',
+        'form.factory' => 'FormServiceProvider',
+        'orm.em' => 'DoctrineOrmServiceProvider',
+        'security.token_storage' => 'SecurityServiceProvider'
+    ];
+
     /**
      * {@inheritdoc}
      */
     public function register(Container $app)
     {
-        if (!isset($app['twig'])) {
-            throw new LogicException('You must register the TwigServiceProvider to use the SilexUserServiceProvider');
+        if (!$app['resolver'] instanceof ServiceControllerResolver) {
+            throw new LogicException('You must register the ServiceControllerServiceProvider to use the SilexUserServiceProvider');
+        }
+
+        foreach (self::$dependencies as $key => $provider) {
+            if (!isset($app[$key])) {
+                throw new LogicException('You must register the ' . $provider . ' to use the SilexUserServiceProvider');
+            }
         }
 
         $app['silex_user.options'] = [];
@@ -111,14 +128,8 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
             throw new LogicException('The "firewall_name" option must be set');
         }
 
-        if (true === $this->getOption($app, 'registration.confirmation.enabled')) {
-            if (null === $app['silex_user.mailer']) {
-                throw new LogicException('You must configure a mailer to enable email notifications');
-            }
-
-            if (empty($this->getOption($app, 'registration.confirmation.from_email'))) {
-                throw new LogicException('The "registration.confirmation.from_email" option must be set');
-            }
+        if (true === $this->getOption($app, 'registration.confirmation.enabled') && empty($this->getOption($app, 'registration.confirmation.from_email'))) {
+            throw new LogicException('The "registration.confirmation.from_email" option must be set');
         }
 
         if (true === $this->getOption($app, 'use_templates')) {
@@ -194,6 +205,10 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
         }
 
         if (true === $this->getOption($app, 'registration.confirmation.enabled')) {
+            if (null === $app['silex_user.mailer']) {
+                throw new LogicException('You must configure a mailer to enable email notifications');
+            }
+
             $dispatcher->addSubscriber(new EmailConfirmationListener($app['silex_user.mailer'], $app['url_generator'], $app['session']));
         }
     }
