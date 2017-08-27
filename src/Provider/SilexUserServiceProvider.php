@@ -120,17 +120,7 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
     {
         $app['silex_user.options'] = array_replace(self::$defaultOptions, $app['silex_user.options']);
 
-        if (empty($app['silex_user.options']['user_class'])) {
-            throw new LogicException('The "user_class" option must be set');
-        }
-
-        if (empty($app['silex_user.options']['firewall_name'])) {
-            throw new LogicException('The "firewall_name" option must be set');
-        }
-
-        if (true === $this->getOption($app, 'registration.confirmation.enabled') && empty($this->getOption($app, 'registration.confirmation.from_email'))) {
-            throw new LogicException('The "registration.confirmation.from_email" option must be set');
-        }
+        $this->validateOptions($app);
 
         if (true === $this->getOption($app, 'use_templates')) {
             $app['twig.loader.filesystem']->addPath(dirname(__DIR__) . '/Resources/views/');
@@ -227,6 +217,26 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
             return $app['silex_user.options'][$name];
         } else {
             return self::$defaultOptions[$name];
+        }
+    }
+
+    /**
+     * Checks if options are set correctly.
+     *
+     * @param Application $app
+     */
+    protected function validateOptions(Application $app)
+    {
+        if (empty($app['silex_user.options']['user_class'])) {
+            throw new LogicException('The "user_class" option must be set');
+        }
+
+        if (empty($app['silex_user.options']['firewall_name'])) {
+            throw new LogicException('The "firewall_name" option must be set');
+        }
+
+        if (true === $this->getOption($app, 'registration.confirmation.enabled') && empty($this->getOption($app, 'registration.confirmation.from_email'))) {
+            throw new LogicException('The "registration.confirmation.from_email" option must be set');
         }
     }
 }
