@@ -197,7 +197,7 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
     public function subscribe(Container $app, EventDispatcherInterface $dispatcher)
     {
         if (true === $this->getOption($app, 'use_authentication_listener')) {
-            $dispatcher->addSubscriber(new AuthenticationListener($app['silex_user.login_manager'], $this->getOption($app, 'firewall_name')));
+            $dispatcher->addSubscriber(new AuthenticationListener($app['silex_user.login_manager'], $app['silex_user.options']['firewall_name']));
         }
 
         if (true === $this->getOption($app, 'use_flash_notifications')) {
