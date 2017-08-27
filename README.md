@@ -6,6 +6,8 @@ Inspired by [FOS User Bundle](https://github.com/FriendsOfSymfony/FOSUserBundle)
 
 See [awurth/silex](https://github.com/awurth/silex) for an example implementation.
 
+See the [project's website](http://awurth.fr/doc/silex-user) for complete and up to date documentation.
+
 ## Dependencies
 SilexUser depends on the following libraries
 - [Doctrine ORM](http://www.doctrine-project.org/projects/orm.html) (see [Doctrine ORM Service Provider](https://github.com/dflydev/dflydev-doctrine-orm-service-provider))
@@ -15,32 +17,26 @@ SilexUser depends on the following libraries
 - [Twig Templating Engine](https://twig.symfony.com) (see [Twig Service Provider](https://silex.symfony.com/doc/2.0/providers/twig.html))
 
 ## Installation
-#### Install SilexUser with Composer
+#### Download SilexUser with Composer
 ``` bash
 $ composer require awurth/silex-user
-```
-
-``` php
-$silexUser = new AWurth\SilexUser\Provider\SilexUserServiceProvider();
-
-$app->register($silexUser);
-
-$app->mount('/', $silexUser);
 ```
 
 #### Register Service Providers
 ``` php
 $app->register(new Silex\Provider\ServiceControllerServiceProvider());
-
-$app->register(new Silex\Provider\ValidatorServiceProvider());
-
-$app->register(new Silex\Provider\FormServiceProvider());
-
+$app->register(new Silex\Provider\TwigServiceProvider());
+$app->register(new Silex\Provider\SessionServiceProvider());
+$app->register(new Silex\Provider\LocaleServiceProvider());
 $app->register(new Silex\Provider\TranslationServiceProvider());
+$app->register(new Silex\Provider\ValidatorServiceProvider());
+$app->register(new Silex\Provider\FormServiceProvider());
+$app->register(new Silex\Provider\FormServiceProvider());
+$app->register(new Silex\Provider\DoctrineServiceProvider());
+$app->register(new Silex\Provider\SecurityServiceProvider());
 ```
 
 #### Install and configure Doctrine ORM
-
 SilexUser uses the Doctrine ORM and the `orm.em` service to get and save data to the database.
 I recommend you use the [Doctrine ORM Service Provider](https://github.com/dflydev/dflydev-doctrine-orm-service-provider).
 
@@ -63,13 +59,11 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), [
 ```
 
 ##### Register Doctrine ORM Service Provider
-
 ``` php
 $app->register(new Dflydev\Provider\DoctrineOrm\DoctrineOrmServiceProvider());
 ```
 
 ##### Register Doctrine ORM Manager Registry Provider
-
 The base User entity uses the `UniqueEntity` validation constraint,
 so you will need to install the [Doctrine ORM Manager Registry Provider](https://github.com/saxulum/saxulum-doctrine-orm-manager-registry-provider)
 or any other library that enables that feature.
@@ -82,10 +76,17 @@ $ composer require saxulum/saxulum-doctrine-orm-manager-registry-provider
 $app->register(new Saxulum\DoctrineOrmManagerRegistry\Provider\DoctrineOrmManagerRegistryProvider());
 ```
 
-#### Create User class
+##### Register the SilexUserServiceProvider
+``` php
+$app->register(new AWurth\SilexUser\Provider\SilexUserServiceProvider());
+```
 
+#### Create User class
 ``` php
 <?php
+
+namespace Security\Entity;
+
 use AWurth\SilexUser\Entity\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -98,11 +99,6 @@ class User extends BaseUser
 }
 ```
 
-##### Tell SilexUser which class to use
-``` php
-$app['silex_user.user_class'] = YourUserClass::class;
-```
-
 You can use this class like any other Doctrine entity and add properties and validation constraints.
 
 #### Register Doctrine mappings
@@ -112,7 +108,7 @@ $app['orm.em.options'] = [
         [
             'type' => 'annotation',
             'namespace' => 'Namespace\Of\User\Class',
-            'path' => 'path/of/User/class',
+            'path' => 'path/to/User/class/directory',
             'use_simple_annotation_reader' => false
         ]
     ]
@@ -129,11 +125,12 @@ use Silex\Provider\SecurityServiceProvider;
 
 $app->register(new SecurityServiceProvider(), [
     'security.firewalls' => [
-        'secured' => [
+        'your_firewall_name' => [
             'pattern' => '^/',
             'form' => [
                 'login_path' => '/login',
-                'check_path' => '/login_check'
+                'check_path' => '/login_check',
+                'with_csrf' => true
             ],
             'logout' => [
                 'logout_path' => '/logout',
@@ -148,15 +145,13 @@ $app->register(new SecurityServiceProvider(), [
 ]);
 ```
 
-## Overwriting default templates
-You might want to overwrite the default templates. To do so, you just have
-to copy the structure of the templates in `silex_user/src/views`:
-create a folder named `silex_user` and put your templates in it.
-Templates for the authentication area go in the `auth` folder and
-templates for emails go in the `email` folder.
-
-You can now set the `silex_user.use_templates` option to `false`.
-This just prevents SilexUser to add the default templates directory to Twig paths.
+#### Configure SilexUser
+``` php
+$app['silex_user.options'] = [
+    'user_class' => YourUserClass::class,
+    'firewall_name' => 'your_firewall_name'
+];
+```
 
 # TODO
 - Commands for creating/removing/updating users
