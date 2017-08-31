@@ -6,6 +6,8 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
 interface UserInterface extends AdvancedUserInterface
 {
+    const ROLE_DEFAULT = 'ROLE_USER';
+
     /**
      * Returns the user unique id.
      *

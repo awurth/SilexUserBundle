@@ -158,7 +158,5 @@ $app['silex_user.options'] = [
 - Custom routes
 - Change password
 - Groups
-- Roles
-- Tests
 - Configuration
     - Security

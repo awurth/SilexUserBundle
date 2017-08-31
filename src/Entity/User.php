@@ -286,7 +286,7 @@ abstract class User implements UserInterface
     {
         $roles = $this->roles;
 
-        $roles[] = 'ROLE_USER';
+        $roles[] = self::ROLE_DEFAULT;
 
         return array_unique($roles);
     }
