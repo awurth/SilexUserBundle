@@ -7,78 +7,99 @@ use PHPUnit\Framework\TestCase;
 
 class UserTest extends TestCase
 {
+    /**
+     * @var User
+     */
+    protected $user;
+
+    public function setUp()
+    {
+        $this->user = $this->getMockForAbstractClass(User::class);
+    }
+    
     public function testUsername()
     {
-        $user = $this->getUser();
-        $this->assertNull($user->getUsername());
+        $this->assertNull($this->user->getUsername());
 
-        $user->setUsername('awurth');
-        $this->assertSame('awurth', $user->getUsername());
+        $this->user->setUsername('awurth');
+        $this->assertSame('awurth', $this->user->getUsername());
     }
 
     public function testEmail()
     {
-        $user = $this->getUser();
-        $this->assertNull($user->getEmail());
+        $this->assertNull($this->user->getEmail());
 
-        $user->setEmail('awurth@awurth.fr');
-        $this->assertSame('awurth@awurth.fr', $user->getEmail());
+        $this->user->setEmail('awurth@awurth.fr');
+        $this->assertSame('awurth@awurth.fr', $this->user->getEmail());
     }
 
     public function testPassword()
     {
-        $user = $this->getUser();
-        $this->assertNull($user->getPassword());
+        $this->assertNull($this->user->getPassword());
 
-        $user->setPassword('my_password');
-        $this->assertSame('my_password', $user->getPassword());
+        $this->user->setPassword('my_password');
+        $this->assertSame('my_password', $this->user->getPassword());
     }
 
     public function testPlainPassword()
     {
-        $user = $this->getUser();
-        $this->assertNull($user->getPlainPassword());
+        $this->assertNull($this->user->getPlainPassword());
 
-        $user->setPlainPassword('my_plain_password');
-        $this->assertSame('my_plain_password', $user->getPlainPassword());
+        $this->user->setPlainPassword('my_plain_password');
+        $this->assertSame('my_plain_password', $this->user->getPlainPassword());
     }
 
     public function testSalt()
     {
-        $user = $this->getUser();
-        $this->assertNull($user->getSalt());
+        $this->assertNull($this->user->getSalt());
 
         $salt = rtrim(str_replace('+', '.', base64_encode(random_bytes(32))), '=');
 
-        $user->setSalt($salt);
-        $this->assertSame($salt, $user->getSalt());
+        $this->user->setSalt($salt);
+        $this->assertSame($salt, $this->user->getSalt());
     }
 
     public function testEnabled()
     {
-        $user = $this->getUser();
-        $this->assertFalse($user->isEnabled());
+        $this->assertFalse($this->user->isEnabled());
 
-        $user->setEnabled(true);
-        $this->assertTrue($user->isEnabled());
+        $this->user->setEnabled(true);
+        $this->assertTrue($this->user->isEnabled());
     }
 
     public function testConfirmationToken()
     {
-        $user = $this->getUser();
-        $this->assertNull($user->getConfirmationToken());
+        $this->assertNull($this->user->getConfirmationToken());
 
         $token = rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '=');
 
-        $user->setConfirmationToken($token);
-        $this->assertSame($token, $user->getConfirmationToken());
+        $this->user->setConfirmationToken($token);
+        $this->assertSame($token, $this->user->getConfirmationToken());
     }
 
-    /**
-     * @return User
-     */
-    public function getUser()
+    public function testRoles()
     {
-        return $this->getMockForAbstractClass(User::class);
+        $this->assertSame([User::ROLE_DEFAULT], $this->user->getRoles());
+
+        $this->user->setRoles(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN']);
+        $this->assertSame(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN', 'ROLE_USER'], $this->user->getRoles());
+    }
+    
+    public function testHasRole()
+    {
+        $defaultRole = User::ROLE_DEFAULT;
+        $newRole = 'ROLE_ADMIN';
+        $this->assertTrue($this->user->hasRole($defaultRole));
+        $this->assertFalse($this->user->hasRole($newRole));
+
+        $this->user->addRole($defaultRole);
+        $this->assertTrue($this->user->hasRole($defaultRole));
+        $this->user->addRole($newRole);
+        $this->assertTrue($this->user->hasRole($newRole));
+
+        $this->user->removeRole($defaultRole);
+        $this->assertTrue($this->user->hasRole($defaultRole));
+        $this->user->removeRole($newRole);
+        $this->assertFalse($this->user->hasRole($newRole));
     }
 }
