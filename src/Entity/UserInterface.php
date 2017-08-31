@@ -91,6 +91,33 @@ interface UserInterface extends AdvancedUserInterface
     public function setRoles(array $roles);
 
     /**
+     * Checks if a user has the given role.
+     *
+     * @param string $role
+     *
+     * @return self
+     */
+    public function hasRole($role);
+
+    /**
+     * Adds a role to the user.
+     *
+     * @param string $role
+     *
+     * @return self
+     */
+    public function addRole($role);
+
+    /**
+     * Removes a role from the user.
+     *
+     * @param string $role
+     *
+     * @return self
+     */
+    public function removeRole($role);
+
+    /**
      * Gets the confirmation token.
      *
      * @return string

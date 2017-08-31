@@ -294,6 +294,45 @@ abstract class User implements UserInterface
     /**
      * {@inheritdoc}
      */
+    public function hasRole($role)
+    {
+        return in_array(strtoupper($role), $this->getRoles(), true);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function addRole($role)
+    {
+        $role = strtoupper($role);
+        if (static::ROLE_DEFAULT === $role) {
+            return $this;
+        }
+
+        if (!in_array($role, $this->roles, true)) {
+            $this->roles[] = $role;
+        }
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function removeRole($role)
+    {
+        $key = array_search(strtoupper($role), $this->roles, true);
+        if (false !== $key) {
+            unset($this->roles[$key]);
+            $this->roles = array_values($this->roles);
+        }
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function setConfirmationToken($token)
     {
         $this->confirmationToken = $token;
