@@ -69,7 +69,7 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
 
         // Services
         $app['silex_user.user_manager'] = function ($app) {
-            return new UserManager($app);
+            return new UserManager($app['orm.em'], $app['security.encoder_factory'], $app['silex_user.options']['user_class']);
         };
 
         $app['silex_user.login_manager'] = function ($app) {

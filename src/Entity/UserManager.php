@@ -2,21 +2,40 @@
 
 namespace AWurth\SilexUser\Entity;
 
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
-use Silex\Application;
 use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
-use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
+use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 class UserManager implements UserManagerInterface
 {
     /**
-     * @var Application
+     * @var string
      */
-    protected $app;
+    protected $class;
 
-    public function __construct(Application $app)
+    /**
+     * @var EncoderFactoryInterface
+     */
+    protected $encoderFactory;
+
+    /**
+     * @var EntityManager
+     */
+    protected $entityManager;
+
+    /**
+     * Constructor.
+     *
+     * @param EntityManager           $entityManager
+     * @param EncoderFactoryInterface $encoderFactory
+     * @param string                  $class
+     */
+    public function __construct(EntityManager $entityManager, EncoderFactoryInterface $encoderFactory, $class)
     {
-        $this->app = $app;
+        $this->entityManager = $entityManager;
+        $this->encoderFactory = $encoderFactory;
+        $this->class = $class;
     }
 
     /**
@@ -24,7 +43,7 @@ class UserManager implements UserManagerInterface
      */
     protected function getRepository()
     {
-        return $this->app['orm.em']->getRepository($this->getClass());
+        return $this->entityManager->getRepository($this->getClass());
     }
 
     /**
@@ -42,10 +61,8 @@ class UserManager implements UserManagerInterface
      */
     public function deleteUser(UserInterface $user)
     {
-        $em = $this->app['orm.em'];
-
-        $em->remove($user);
-        $em->flush();
+        $this->entityManager->remove($user);
+        $this->entityManager->flush();
     }
 
     /**
@@ -105,7 +122,7 @@ class UserManager implements UserManagerInterface
      */
     public function getClass()
     {
-        return $this->app['silex_user.options']['user_class'];
+        return $this->class;
     }
 
     /**
@@ -119,9 +136,7 @@ class UserManager implements UserManagerInterface
             return;
         }
 
-        /** @var PasswordEncoderInterface $encoder */
-        $encoder = $this->app['security.encoder_factory']->getEncoder($user);
-
+        $encoder = $this->encoderFactory->getEncoder($user);
         if ($encoder instanceof BCryptPasswordEncoder) {
             $user->setSalt(null);
         } else {
@@ -139,11 +154,9 @@ class UserManager implements UserManagerInterface
     {
         $this->updatePassword($user);
 
-        $em = $this->app['orm.em'];
-
-        $em->persist($user);
+        $this->entityManager->persist($user);
         if ($flush) {
-            $em->flush();
+            $this->entityManager->flush();
         }
     }
 }
