@@ -82,7 +82,7 @@ class UserTest extends TestCase
         $this->assertSame([User::ROLE_DEFAULT], $this->user->getRoles());
 
         $this->user->setRoles(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN']);
-        $this->assertSame(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN', 'ROLE_USER'], $this->user->getRoles());
+        $this->assertSame(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN', User::ROLE_DEFAULT], $this->user->getRoles());
     }
     
     public function testHasRole()
