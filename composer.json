@@ -27,6 +27,9 @@
             "AWurth\\SilexUser\\": "src/"
         }
     },
+    "config": {
+        "sort-packages": true
+    },
     "suggest": {
         "swiftmailer/swiftmailer": "Use SwiftMailer for sending emails"
     }
