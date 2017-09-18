@@ -27,6 +27,11 @@
             "AWurth\\SilexUser\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "AWurth\\SilexUser\\Tests\\": "tests/"
+        }
+    },
     "config": {
         "sort-packages": true
     },
