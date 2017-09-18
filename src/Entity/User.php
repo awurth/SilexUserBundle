@@ -58,7 +58,7 @@ abstract class User implements UserInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="salt", type="string", nullable=true)
+     * @ORM\Column(name="salt", type="string", length=255, nullable=true)
      */
     protected $salt;
 
@@ -86,7 +86,7 @@ abstract class User implements UserInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="confirmation_token", type="string", unique=true, nullable=true)
+     * @ORM\Column(name="confirmation_token", type="string", length=255, unique=true, nullable=true)
      */
     protected $confirmationToken;
 
