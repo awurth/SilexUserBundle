@@ -2,6 +2,7 @@
 
 namespace AWurth\SilexUser\Entity;
 
+use DateTime;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
 interface UserInterface extends AdvancedUserInterface
@@ -78,6 +79,22 @@ interface UserInterface extends AdvancedUserInterface
      * @return self
      */
     public function setEnabled($enabled);
+
+    /**
+     * Gets the last login date.
+     *
+     * @return DateTime
+     */
+    public function getLastLogin();
+
+    /**
+     * Sets the last login date.
+     *
+     * @param DateTime|null $date
+     *
+     * @return self
+     */
+    public function setLastLogin(DateTime $date = null);
 
     /**
      * Sets the roles of the user.

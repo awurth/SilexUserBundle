@@ -2,6 +2,7 @@
 
 namespace AWurth\SilexUser\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints\Email;
@@ -69,6 +70,13 @@ abstract class User implements UserInterface
     protected $enabled = false;
 
     /**
+     * @var DateTime
+     *
+     * @ORM\Column(name="last_login", type="datetime", nullable=true)
+     */
+    protected $lastLogin;
+
+    /**
      * @var array
      *
      * @ORM\Column(name="roles", type="array")
@@ -82,6 +90,11 @@ abstract class User implements UserInterface
      */
     protected $confirmationToken;
 
+    /**
+     * Used be the validator to validate the User data.
+     *
+     * @param ClassMetadata $metadata
+     */
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
         $metadata->addConstraint(new UniqueEntity([
@@ -267,6 +280,24 @@ abstract class User implements UserInterface
     public function getSalt()
     {
         return $this->salt;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setLastLogin(DateTime $date = null)
+    {
+        $this->lastLogin = $date;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getLastLogin()
+    {
+        return $this->lastLogin;
     }
 
     /**
