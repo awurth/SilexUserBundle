@@ -68,6 +68,8 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
 
         // Services
         $app['silex_user.user_manager'] = function ($app) {
+            $this->validateOptions($app);
+
             return new UserManager(
                 $app[$app['silex_user.options']['object_manager']],
                 $app['security.encoder_factory'],
