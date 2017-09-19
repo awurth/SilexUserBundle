@@ -1,6 +1,6 @@
 <?php
 
-namespace AWurth\SilexUser\Entity;
+namespace AWurth\SilexUser\Model;
 
 use DateTime;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;

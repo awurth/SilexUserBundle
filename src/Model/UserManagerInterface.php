@@ -1,6 +1,6 @@
 <?php
 
-namespace AWurth\SilexUser\Entity;
+namespace AWurth\SilexUser\Model;
 
 interface UserManagerInterface
 {

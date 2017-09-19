@@ -2,7 +2,7 @@
 
 namespace AWurth\SilexUser\Security;
 
-use AWurth\SilexUser\Entity\UserInterface;
+use AWurth\SilexUser\Model\UserInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;

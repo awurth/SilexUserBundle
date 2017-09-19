@@ -2,8 +2,8 @@
 
 namespace AWurth\SilexUser\Provider;
 
-use AWurth\SilexUser\Entity\UserInterface;
-use AWurth\SilexUser\Entity\UserManagerInterface;
+use AWurth\SilexUser\Model\UserInterface;
+use AWurth\SilexUser\Model\UserManagerInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface as SecurityUserInterface;

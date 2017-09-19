@@ -2,11 +2,11 @@
 
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/1ec0cb08-4d4f-4dcf-86ff-6512afaf24d5/mini.png)](https://insight.sensiolabs.com/projects/1ec0cb08-4d4f-4dcf-86ff-6512afaf24d5) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/awurth/silex-user/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/awurth/silex-user/?branch=master) [![Total Downloads](https://poser.pugx.org/awurth/silex-user/downloads)](https://packagist.org/packages/awurth/silex-user) [![License](https://poser.pugx.org/awurth/silex-user/license)](https://packagist.org/packages/awurth/silex-user)
 
-Inspired by [FOS User Bundle](https://github.com/FriendsOfSymfony/FOSUserBundle) and [Silex Simple User](https://github.com/jasongrimes/silex-simpleuser).
+Inspired by [FOS User Bundle](https://github.com/FriendsOfSymfony/FOSUserBundle).
 
 See [awurth/silex](https://github.com/awurth/silex) for an example implementation.
 
-See the [project's website](http://awurth.fr/doc/silex-user) for complete and up to date documentation.
+See the [project's website](http://awurth.fr/doc/silex-user) for the complete and up to date documentation.
 
 ## Dependencies
 SilexUser depends on the following libraries
@@ -160,3 +160,4 @@ $app['silex_user.options'] = [
 - Groups
 - Configuration
     - Security
+- Change namespace

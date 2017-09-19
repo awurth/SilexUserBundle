@@ -2,7 +2,7 @@
 
 namespace AWurth\SilexUser\EventListener;
 
-use AWurth\SilexUser\Entity\UserInterface;
+use AWurth\SilexUser\Model\UserInterface;
 use AWurth\SilexUser\Event\Events;
 use AWurth\SilexUser\Event\FormEvent;
 use AWurth\SilexUser\Mailer\MailerInterface;

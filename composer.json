@@ -9,7 +9,7 @@
         }
     ],
     "require": {
-        "doctrine/orm": "^2.3",
+        "php": "^5.5.9|>=7.0.8",
         "silex/silex": "^2.2",
         "symfony/doctrine-bridge": "^3.3",
         "symfony/form": "^3.3",
@@ -18,8 +18,11 @@
         "symfony/validator": "^3.3"
     },
     "require-dev": {
+        "alcaeus/mongo-php-adapter": "^1.1",
         "dflydev/doctrine-orm-service-provider": "^2.0",
+        "doctrine/orm": "^2.3",
         "phpunit/phpunit": "^6.3",
+        "saxulum/saxulum-doctrine-mongodb-odm-provider": "^2.3",
         "swiftmailer/swiftmailer": "^6.0"
     },
     "autoload": {
@@ -36,6 +39,10 @@
         "sort-packages": true
     },
     "suggest": {
+        "dflydev/doctrine-orm-service-provider": "An implementation of the Doctrine ORM for Silex",
+        "saxulum/saxulum-doctrine-mongodb-odm-manager-registry-provider": "Adds support for the Unique validator for MongoDB documents",
+        "saxulum/saxulum-doctrine-mongodb-odm-provider": "An implementation of the Doctrine MongoDB ODM for Silex",
+        "saxulum/saxulum-doctrine-orm-manager-registry-provider": "Adds support for the UniqueEntity validator and more",
         "swiftmailer/swiftmailer": "Use SwiftMailer for sending emails"
     }
 }

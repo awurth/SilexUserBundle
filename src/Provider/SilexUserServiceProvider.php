@@ -4,7 +4,7 @@ namespace AWurth\SilexUser\Provider;
 
 use AWurth\SilexUser\Controller\AuthController;
 use AWurth\SilexUser\Controller\RegistrationController;
-use AWurth\SilexUser\Entity\UserManager;
+use AWurth\SilexUser\Model\UserManager;
 use AWurth\SilexUser\EventListener\AuthenticationListener;
 use AWurth\SilexUser\EventListener\EmailConfirmationListener;
 use AWurth\SilexUser\EventListener\FlashListener;
@@ -46,7 +46,6 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
         'translator' => 'TranslationServiceProvider',
         'validator' => 'ValidatorServiceProvider',
         'form.factory' => 'FormServiceProvider',
-        'orm.em' => 'DoctrineOrmServiceProvider',
         'security.token_storage' => 'SecurityServiceProvider'
     ];
 
@@ -69,7 +68,11 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
 
         // Services
         $app['silex_user.user_manager'] = function ($app) {
-            return new UserManager($app['orm.em'], $app['security.encoder_factory'], $app['silex_user.options']['user_class']);
+            return new UserManager(
+                $app[$app['silex_user.options']['object_manager']],
+                $app['security.encoder_factory'],
+                $app['silex_user.options']['user_class']
+            );
         };
 
         $app['silex_user.login_manager'] = function ($app) {
@@ -227,6 +230,10 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
      */
     protected function validateOptions(Application $app)
     {
+        if (empty($app['silex_user.options']['object_manager'])) {
+            throw new LogicException('The "object_manager" option must be set');
+        }
+
         if (empty($app['silex_user.options']['user_class'])) {
             throw new LogicException('The "user_class" option must be set');
         }

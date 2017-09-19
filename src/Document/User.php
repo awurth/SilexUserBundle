@@ -1,84 +1,82 @@
 <?php
 
-namespace AWurth\SilexUser\Entity;
+namespace AWurth\SilexUser\Document;
 
 use AWurth\SilexUser\Model\User as BaseUser;
+use AWurth\SilexUser\Validator\Constraints\Unique;
 use DateTime;
-use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 /**
- * Base User entity class.
+ * Base User document class.
  *
  * @author Alexis Wurth <alexis.wurth57@gmail.com>
  *
- * @ORM\MappedSuperclass
+ * @ODM\MappedSuperclass
  */
 abstract class User extends BaseUser
 {
     /**
      * @var int
      *
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(name="id", type="integer")
+     * @ODM\Id
      */
     protected $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="username", type="string", length=180, unique=true)
+     * @ODM\Field(type="string")
      */
     protected $username;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=180, unique=true)
+     * @ODM\Field(type="string")
      */
     protected $email;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="password", type="string", length=255)
+     * @ODM\Field(type="string")
      */
     protected $password;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="salt", type="string", length=255, nullable=true)
+     * @ODM\Field(type="string")
      */
     protected $salt;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="enabled", type="boolean")
+     * @ODM\Field(type="boolean")
      */
     protected $enabled = false;
 
     /**
      * @var DateTime
      *
-     * @ORM\Column(name="last_login", type="datetime", nullable=true)
+     * @ODM\Field(type="date")
      */
     protected $lastLogin;
 
     /**
      * @var array
      *
-     * @ORM\Column(name="roles", type="array")
+     * @ODM\Field(type="collection")
      */
     protected $roles = [];
 
     /**
      * @var string
      *
-     * @ORM\Column(name="confirmation_token", type="string", length=180, unique=true, nullable=true)
+     * @ODM\Field(type="string")
      */
     protected $confirmationToken;
 
@@ -87,11 +85,11 @@ abstract class User extends BaseUser
      */
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
-        $metadata->addConstraint(new UniqueEntity([
+        $metadata->addConstraint(new Unique([
             'fields' => 'username',
             'message' => 'silex_user.username.already_used'
         ]));
-        $metadata->addConstraint(new UniqueEntity([
+        $metadata->addConstraint(new Unique([
             'fields' => 'email',
             'message' => 'silex_user.email.already_used'
         ]));

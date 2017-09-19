@@ -2,8 +2,8 @@
 
 namespace AWurth\SilexUser\Controller;
 
-use AWurth\SilexUser\Entity\UserInterface;
-use AWurth\SilexUser\Entity\UserManagerInterface;
+use AWurth\SilexUser\Model\UserInterface;
+use AWurth\SilexUser\Model\UserManagerInterface;
 use Doctrine\ORM\EntityManager;
 use Silex\Application;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;

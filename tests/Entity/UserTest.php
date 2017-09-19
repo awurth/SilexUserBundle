@@ -2,7 +2,7 @@
 
 namespace AWurth\SilexUser\Tests\Entity;
 
-use AWurth\SilexUser\Entity\User;
+use AWurth\SilexUser\Model\User;
 use PHPUnit\Framework\TestCase;
 
 class UserTest extends TestCase

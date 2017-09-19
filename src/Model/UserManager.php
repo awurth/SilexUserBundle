@@ -1,9 +1,9 @@
 <?php
 
-namespace AWurth\SilexUser\Entity;
+namespace AWurth\SilexUser\Model;
 
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Common\Persistence\ObjectRepository;
 use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
@@ -20,30 +20,32 @@ class UserManager implements UserManagerInterface
     protected $encoderFactory;
 
     /**
-     * @var EntityManager
+     * @var ObjectManager
      */
-    protected $entityManager;
+    protected $objectManager;
 
     /**
      * Constructor.
      *
-     * @param EntityManager           $entityManager
+     * @param ObjectManager           $objectManager
      * @param EncoderFactoryInterface $encoderFactory
      * @param string                  $class
      */
-    public function __construct(EntityManager $entityManager, EncoderFactoryInterface $encoderFactory, $class)
+    public function __construct(ObjectManager $objectManager, EncoderFactoryInterface $encoderFactory, $class)
     {
-        $this->entityManager = $entityManager;
+        $this->objectManager = $objectManager;
         $this->encoderFactory = $encoderFactory;
         $this->class = $class;
     }
 
     /**
-     * @return EntityRepository
+     * Gets the Doctrine repository for the User class.
+     *
+     * @return ObjectRepository
      */
     protected function getRepository()
     {
-        return $this->entityManager->getRepository($this->getClass());
+        return $this->objectManager->getRepository($this->getClass());
     }
 
     /**
@@ -61,8 +63,8 @@ class UserManager implements UserManagerInterface
      */
     public function deleteUser(UserInterface $user)
     {
-        $this->entityManager->remove($user);
-        $this->entityManager->flush();
+        $this->objectManager->remove($user);
+        $this->objectManager->flush();
     }
 
     /**
@@ -154,9 +156,9 @@ class UserManager implements UserManagerInterface
     {
         $this->updatePassword($user);
 
-        $this->entityManager->persist($user);
+        $this->objectManager->persist($user);
         if ($flush) {
-            $this->entityManager->flush();
+            $this->objectManager->flush();
         }
     }
 }

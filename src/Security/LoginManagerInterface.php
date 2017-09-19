@@ -2,7 +2,7 @@
 
 namespace AWurth\SilexUser\Security;
 
-use AWurth\SilexUser\Entity\UserInterface;
+use AWurth\SilexUser\Model\UserInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 interface LoginManagerInterface

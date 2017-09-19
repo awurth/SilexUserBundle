@@ -2,7 +2,7 @@
 
 namespace AWurth\SilexUser\Mailer;
 
-use AWurth\SilexUser\Entity\UserInterface;
+use AWurth\SilexUser\Model\UserInterface;
 use Swift_Mailer;
 use Swift_Message;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;

@@ -2,7 +2,7 @@
 
 namespace AWurth\SilexUser\Controller;
 
-use AWurth\SilexUser\Entity\UserInterface;
+use AWurth\SilexUser\Model\UserInterface;
 use AWurth\SilexUser\Event\FilterUserResponseEvent;
 use AWurth\SilexUser\Event\FormEvent;
 use AWurth\SilexUser\Event\GetResponseUserEvent;

@@ -4,7 +4,7 @@ namespace AWurth\SilexUser\Event;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use AWurth\SilexUser\Entity\UserInterface;
+use AWurth\SilexUser\Model\UserInterface;
 
 class FilterUserResponseEvent extends UserEvent
 {

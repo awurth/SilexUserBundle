@@ -4,7 +4,7 @@ namespace AWurth\SilexUser\Event;
 
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
-use AWurth\SilexUser\Entity\UserInterface;
+use AWurth\SilexUser\Model\UserInterface;
 
 class UserEvent extends Event
 {
