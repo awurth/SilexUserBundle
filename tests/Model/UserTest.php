@@ -1,6 +1,6 @@
 <?php
 
-namespace AWurth\SilexUser\Tests\Entity;
+namespace AWurth\SilexUser\Tests\Model;
 
 use AWurth\SilexUser\Model\User;
 use PHPUnit\Framework\TestCase;
