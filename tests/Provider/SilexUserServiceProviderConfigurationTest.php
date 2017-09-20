@@ -3,10 +3,8 @@
 namespace AWurth\SilexUser\Tests;
 
 use AWurth\SilexUser\Provider\SilexUserServiceProvider;
-use Dflydev\Provider\DoctrineOrm\DoctrineOrmServiceProvider;
 use LogicException;
 use Silex\Application;
-use Silex\Provider\DoctrineServiceProvider;
 use Silex\Provider\FormServiceProvider;
 use Silex\Provider\LocaleServiceProvider;
 use Silex\Provider\SecurityServiceProvider;
@@ -22,10 +20,36 @@ class SilexUserServiceProviderConfigurationTest extends WebTestCase
 {
     /**
      * @expectedException LogicException
+     * @expectedExceptionMessage The "object_manager" option must be set
+     */
+    public function testWithoutObjectManager()
+    {
+        $this->app->boot();
+    }
+
+    /**
+     * @expectedException LogicException
+     * @expectedExceptionMessage The "object_manager" option must be set
+     */
+    public function testWithEmptyObjectManager()
+    {
+        $this->app['silex_user.options'] = [
+            'object_manager' => ''
+        ];
+
+        $this->app->boot();
+    }
+
+    /**
+     * @expectedException LogicException
      * @expectedExceptionMessage The "user_class" option must be set
      */
     public function testWithoutUserClass()
     {
+        $this->app['silex_user.options'] = [
+            'object_manager' => 'orm.em'
+        ];
+
         $this->app->boot();
     }
 
@@ -36,6 +60,7 @@ class SilexUserServiceProviderConfigurationTest extends WebTestCase
     public function testWithEmptyUserClass()
     {
         $this->app['silex_user.options'] = [
+            'object_manager' => 'orm.em',
             'user_class' => ''
         ];
 
@@ -49,6 +74,7 @@ class SilexUserServiceProviderConfigurationTest extends WebTestCase
     public function testWithoutFirewallName()
     {
         $this->app['silex_user.options'] = [
+            'object_manager' => 'orm.em',
             'user_class' => 'User'
         ];
 
@@ -62,6 +88,7 @@ class SilexUserServiceProviderConfigurationTest extends WebTestCase
     public function testWithEmptyFirewallName()
     {
         $this->app['silex_user.options'] = [
+            'object_manager' => 'orm.em',
             'user_class' => 'User',
             'firewall_name' => ''
         ];
@@ -76,6 +103,7 @@ class SilexUserServiceProviderConfigurationTest extends WebTestCase
     public function testEmailConfirmationWithoutMailer()
     {
         $this->app['silex_user.options'] = [
+            'object_manager' => 'orm.em',
             'user_class' => 'User',
             'firewall_name' => 'main',
             'registration.confirmation.enabled' => true
@@ -93,6 +121,7 @@ class SilexUserServiceProviderConfigurationTest extends WebTestCase
         $this->app->register(new SwiftmailerServiceProvider());
 
         $this->app['silex_user.options'] = [
+            'object_manager' => 'orm.em',
             'user_class' => 'User',
             'firewall_name' => 'main',
             'registration.confirmation.enabled' => true
@@ -110,6 +139,7 @@ class SilexUserServiceProviderConfigurationTest extends WebTestCase
         $this->app->register(new SwiftmailerServiceProvider());
 
         $this->app['silex_user.options'] = [
+            'object_manager' => 'orm.em',
             'user_class' => 'User',
             'firewall_name' => 'main',
             'registration.confirmation.enabled' => true,
@@ -132,8 +162,6 @@ class SilexUserServiceProviderConfigurationTest extends WebTestCase
         $app->register(new TranslationServiceProvider());
         $app->register(new ValidatorServiceProvider());
         $app->register(new FormServiceProvider());
-        $app->register(new DoctrineServiceProvider());
-        $app->register(new DoctrineOrmServiceProvider());
         $app->register(new SecurityServiceProvider());
         $app->register(new SilexUserServiceProvider());
 

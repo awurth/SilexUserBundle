@@ -3,10 +3,8 @@
 namespace AWurth\SilexUser\Tests;
 
 use AWurth\SilexUser\Provider\SilexUserServiceProvider;
-use Dflydev\Provider\DoctrineOrm\DoctrineOrmServiceProvider;
 use LogicException;
 use Silex\Application;
-use Silex\Provider\DoctrineServiceProvider;
 use Silex\Provider\FormServiceProvider;
 use Silex\Provider\LocaleServiceProvider;
 use Silex\Provider\ServiceControllerServiceProvider;
@@ -91,22 +89,6 @@ class SilexUserServiceProviderDependenciesTest extends WebTestCase
 
     /**
      * @expectedException LogicException
-     * @expectedExceptionMessage You must register the DoctrineOrmServiceProvider to use the SilexUserServiceProvider
-     */
-    public function testRegisterWitoutDoctrineOrm()
-    {
-        $this->app->register(new ServiceControllerServiceProvider());
-        $this->app->register(new TwigServiceProvider());
-        $this->app->register(new SessionServiceProvider());
-        $this->app->register(new LocaleServiceProvider());
-        $this->app->register(new TranslationServiceProvider());
-        $this->app->register(new ValidatorServiceProvider());
-        $this->app->register(new FormServiceProvider());
-        $this->app->register(new SilexUserServiceProvider());
-    }
-
-    /**
-     * @expectedException LogicException
      * @expectedExceptionMessage You must register the SecurityServiceProvider to use the SilexUserServiceProvider
      */
     public function tetRegisterWitoutSecurity()
@@ -118,8 +100,6 @@ class SilexUserServiceProviderDependenciesTest extends WebTestCase
         $this->app->register(new TranslationServiceProvider());
         $this->app->register(new ValidatorServiceProvider());
         $this->app->register(new FormServiceProvider());
-        $this->app->register(new DoctrineServiceProvider());
-        $this->app->register(new DoctrineOrmServiceProvider());
 
         $this->app->register(new SilexUserServiceProvider());
     }
