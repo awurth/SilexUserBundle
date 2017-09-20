@@ -1,7 +1,32 @@
 <?php
 
+/*
+ * This file is part of the awurth/silex-user package.
+ *
+ * (c) Alexis Wurth <awurth.dev@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace AWurth\SilexUser\Model;
 
+use Traversable;
+
+/**
+ * Interface to be implemented by user managers. This adds an additional level
+ * of abstraction between your application, and the actual repository.
+ *
+ * All changes to users should happen through this interface.
+ *
+ * The class also contains ACL annotations which will only work if you have the
+ * SecurityExtraBundle installed, otherwise they will simply be ignored.
+ *
+ * @author Gordon Franke <info@nevalon.de>
+ * @author Thibault Duplessis <thibault.duplessis@gmail.com>
+ * @author Johannes M. Schmitt <schmittjoh@gmail.com>
+ * @author Alexis Wurth <awurth.dev@gmail.com>
+ */
 interface UserManagerInterface
 {
     /**
@@ -66,7 +91,7 @@ interface UserManagerInterface
     /**
      * Returns a collection with all user instances.
      *
-     * @return array
+     * @return Traversable
      */
     public function findUsers();
 

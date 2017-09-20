@@ -1,10 +1,18 @@
 <?php
 
+/*
+ * This file is part of the awurth/silex-user package.
+ *
+ * (c) Alexis Wurth <awurth.dev@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace AWurth\SilexUser\Controller;
 
 use AWurth\SilexUser\Model\UserInterface;
 use AWurth\SilexUser\Model\UserManagerInterface;
-use Doctrine\ORM\EntityManager;
 use Silex\Application;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
@@ -13,6 +21,11 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
+/**
+ * Silex User base Controller.
+ *
+ * @author Alexis Wurth <awurth.dev@gmail.com>
+ */
 class Controller
 {
     /**
@@ -34,8 +47,8 @@ class Controller
      * Creates a new form.
      *
      * @param string $type
-     * @param mixed $data
-     * @param array $options
+     * @param mixed  $data
+     * @param array  $options
      *
      * @return FormInterface
      */
@@ -52,16 +65,6 @@ class Controller
     public function getDispatcher()
     {
         return $this->application['dispatcher'];
-    }
-
-    /**
-     * Gets Doctrine Entity Manager.
-     *
-     * @return EntityManager
-     */
-    public function getEntityManager()
-    {
-        return $this->application['orm.em'];
     }
 
     /**
@@ -108,8 +111,8 @@ class Controller
     /**
      * Generates a path from the given parameters.
      *
-     * @param string      $route      The name of the route
-     * @param mixed       $parameters An array of parameters
+     * @param string $route      The name of the route
+     * @param mixed  $parameters An array of parameters
      *
      * @return string The generated path
      */
@@ -122,8 +125,8 @@ class Controller
      * Redirects the user to another route.
      *
      * @param string $route The route to redirect to
-     * @param array $parameters An array of parameters
-     * @param int $status The status code (302 by default)
+     * @param array  $parameters An array of parameters
+     * @param int    $status The status code (302 by default)
      *
      * @return RedirectResponse
      */
@@ -136,7 +139,7 @@ class Controller
      * Renders a template.
      *
      * @param string $name The template name
-     * @param array $context An array of parameters to pass to the template
+     * @param array  $context An array of parameters to pass to the template
      *
      * @return string
      */

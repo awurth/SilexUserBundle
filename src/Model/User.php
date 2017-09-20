@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the awurth/silex-user package.
+ *
+ * (c) Alexis Wurth <awurth.dev@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace AWurth\SilexUser\Model;
 
 use DateTime;
@@ -12,7 +21,7 @@ use Symfony\Component\Validator\Mapping\ClassMetadata;
 /**
  * Base User class.
  *
- * @author Alexis Wurth <alexis.wurth57@gmail.com>
+ * @author Alexis Wurth <awurth.dev@gmail.com>
  */
 abstract class User implements UserInterface
 {

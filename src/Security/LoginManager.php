@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the awurth/silex-user package.
+ *
+ * (c) Alexis Wurth <awurth.dev@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace AWurth\SilexUser\Security;
 
 use AWurth\SilexUser\Model\UserInterface;
@@ -11,6 +20,12 @@ use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Http\RememberMe\RememberMeServicesInterface;
 use Symfony\Component\Security\Http\Session\SessionAuthenticationStrategyInterface;
 
+/**
+ * Abstracts process for manually logging in a user.
+ *
+ * @author Johannes M. Schmitt <schmittjoh@gmail.com>
+ * @author Alexis Wurth <awurth.dev@gmail.com>
+ */
 class LoginManager implements LoginManagerInterface
 {
     /**

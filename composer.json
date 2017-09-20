@@ -1,11 +1,11 @@
 {
     "name": "awurth/silex-user",
-    "description": "A user provider for Silex",
+    "description": "Provides user management for your Silex project",
     "license": "MIT",
     "authors": [
         {
             "name": "Alexis Wurth",
-            "email": "alexis.wurth57@gmail.com"
+            "email": "awurth.dev@gmail.com"
         }
     ],
     "require": {

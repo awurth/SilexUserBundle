@@ -1,25 +1,68 @@
 <?php
 
+/*
+ * This file is part of the awurth/silex-user package.
+ *
+ * (c) Alexis Wurth <awurth.dev@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace AWurth\SilexUser\Event;
 
 /**
  * Contains all events thrown by SilexUser.
- *
- * @author Alexis Wurth <alexis.wurth57@gmail.com>
  */
 class Events
 {
+    /**
+     * The REGISTRATION_INITIALIZE event occurs when the registration process is initialized.
+     *
+     * This event allows you to modify the default values of the user before binding the form.
+     */
     const REGISTRATION_INITIALIZE = 'silex_user.registration.initialize';
 
+    /**
+     * The REGISTRATION_SUCCESS event occurs when the registration form is submitted successfully.
+     *
+     * This event allows you to set the response instead of using the default one.
+     */
     const REGISTRATION_SUCCESS = 'silex_user.registration.success';
 
+    /**
+     * The REGISTRATION_FAILURE event occurs when the registration form is not valid.
+     *
+     * This event allows you to set the response instead of using the default one.
+     * The event listener method receives a AWurth\SilexUser\Event\FormEvent instance.
+     */
     const REGISTRATION_FAILURE = 'silex_user.registration.failure';
 
+    /**
+     * The REGISTRATION_COMPLETED event occurs after saving the user in the registration process.
+     *
+     * This event allows you to access the response which will be sent.
+     */
     const REGISTRATION_COMPLETED = 'silex_user.registration.completed';
 
+    /**
+     * The REGISTRATION_CONFIRM event occurs just before confirming the account.
+     *
+     * This event allows you to access the user which will be confirmed.
+     */
     const REGISTRATION_CONFIRM = 'silex_user.registration.confirm';
 
+    /**
+     * The REGISTRATION_CONFIRMED event occurs after confirming the account.
+     *
+     * This event allows you to access the response which will be sent.
+     */
     const REGISTRATION_CONFIRMED = 'silex_user.registration.confirmed';
 
+    /**
+     * The SECURITY_IMPLICIT_LOGIN event occurs when the user is logged in programmatically.
+     *
+     * This event allows you to access the response which will be sent.
+     */
     const SECURITY_IMPLICIT_LOGIN = 'silex_user.security.implicit_login';
 }

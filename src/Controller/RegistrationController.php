@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the awurth/silex-user package.
+ *
+ * (c) Alexis Wurth <awurth.dev@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace AWurth\SilexUser\Controller;
 
 use AWurth\SilexUser\Model\UserInterface;
@@ -16,7 +25,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 /**
  * Silex User Registration Controller.
  *
- * @author Alexis Wurth <alexis.wurth57@gmail.com>
+ * @author Alexis Wurth <awurth.dev@gmail.com>
  */
 class RegistrationController extends Controller
 {

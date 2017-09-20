@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the awurth/silex-user package.
+ *
+ * (c) Alexis Wurth <awurth.dev@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace AWurth\SilexUser\Form;
 
 use Symfony\Component\Form\AbstractType;
@@ -12,7 +21,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 /**
  * User Registration Form Type.
  *
- * @author Alexis Wurth <alexis.wurth57@gmail.com>
+ * @author Alexis Wurth <awurth.dev@gmail.com>
  */
 class RegistrationFormType extends AbstractType
 {
