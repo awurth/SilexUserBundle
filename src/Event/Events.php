@@ -20,4 +20,6 @@ class Events
     const REGISTRATION_CONFIRM = 'silex_user.registration.confirm';
 
     const REGISTRATION_CONFIRMED = 'silex_user.registration.confirmed';
+
+    const SECURITY_IMPLICIT_LOGIN = 'silex_user.security.implicit_login';
 }

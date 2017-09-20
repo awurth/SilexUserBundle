@@ -4,6 +4,7 @@ namespace AWurth\SilexUser\Provider;
 
 use AWurth\SilexUser\Controller\AuthController;
 use AWurth\SilexUser\Controller\RegistrationController;
+use AWurth\SilexUser\EventListener\LastLoginListener;
 use AWurth\SilexUser\Model\UserManager;
 use AWurth\SilexUser\EventListener\AuthenticationListener;
 use AWurth\SilexUser\EventListener\EmailConfirmationListener;
@@ -35,6 +36,7 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
         'use_templates' => true,
         'use_translations' => true,
         'use_flash_notifications' => true,
+        'use_last_login_listener' => true,
         'use_authentication_listener' => false,
         'registration.confirmation.enabled' => false,
         'registration.confirmation.from_email' => ''
@@ -123,10 +125,6 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
      */
     public function boot(Application $app)
     {
-        $app['silex_user.options'] = array_replace(self::$defaultOptions, $app['silex_user.options']);
-
-        $this->validateOptions($app);
-
         if (true === $this->getOption($app, 'use_templates')) {
             $app['twig.loader.filesystem']->addPath(dirname(__DIR__) . '/Resources/views/');
         }
@@ -191,6 +189,14 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
      */
     public function subscribe(Container $app, EventDispatcherInterface $dispatcher)
     {
+        $app['silex_user.options'] = array_replace(self::$defaultOptions, $app['silex_user.options']);
+
+        $this->validateOptions($app);
+
+        if (true === $this->getOption($app, 'use_last_login_listener')) {
+            $dispatcher->addSubscriber(new LastLoginListener($app['silex_user.user_manager']));
+        }
+
         if (true === $this->getOption($app, 'use_authentication_listener')) {
             $dispatcher->addSubscriber(new AuthenticationListener($app['silex_user.login_manager'], $app['silex_user.options']['firewall_name']));
         }
