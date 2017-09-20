@@ -56,7 +56,7 @@ EOT
         $username = $input->getArgument('username');
         $password = $input->getArgument('password');
 
-        $manipulator = $this->getContainer()->get('silex_user.util.user_manipulator');
+        $manipulator = $this->container['silex_user.util.user_manipulator'];
         $manipulator->changePassword($username, $password);
 
         $output->writeln(sprintf('Changed password for user <comment>%s</comment>', $username));

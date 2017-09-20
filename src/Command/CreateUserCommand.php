@@ -74,7 +74,7 @@ EOT
         $inactive = $input->getOption('inactive');
         $superadmin = $input->getOption('super-admin');
 
-        $manipulator = $this->getContainer()->get('silex_user.util.user_manipulator');
+        $manipulator = $this->container['silex_user.util.user_manipulator'];
         $manipulator->create($username, $password, $email, !$inactive, $superadmin);
 
         $output->writeln(sprintf('Created user <comment>%s</comment>', $username));

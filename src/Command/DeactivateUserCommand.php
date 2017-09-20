@@ -47,7 +47,7 @@ EOT
     {
         $username = $input->getArgument('username');
 
-        $manipulator = $this->getContainer()->get('silex_user.util.user_manipulator');
+        $manipulator = $this->container['silex_user.util.user_manipulator'];
         $manipulator->deactivate($username);
 
         $output->writeln(sprintf('User "%s" has been deactivated.', $username));

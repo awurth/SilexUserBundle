@@ -11,7 +11,7 @@
 
 namespace AWurth\SilexUser\Command;
 
-use Psr\Container\ContainerInterface;
+use Pimple\Container;
 use Symfony\Component\Console\Command\Command;
 
 /**
@@ -22,17 +22,17 @@ use Symfony\Component\Console\Command\Command;
 abstract class ContainerAwareCommand extends Command
 {
     /**
-     * @var ContainerInterface
+     * @var Container
      */
     protected $container;
 
     /**
      * Constructor.
      *
-     * @param ContainerInterface $container
+     * @param Container $container
      * @param string|null        $name
      */
-    public function __construct(ContainerInterface $container, $name = null)
+    public function __construct(Container $container, $name = null)
     {
         parent::__construct($name);
 
@@ -42,7 +42,7 @@ abstract class ContainerAwareCommand extends Command
     /**
      * Gets the container.
      *
-     * @return ContainerInterface
+     * @return Container
      */
     public function getContainer()
     {
@@ -52,9 +52,9 @@ abstract class ContainerAwareCommand extends Command
     /**
      * Sets the container.
      *
-     * @param ContainerInterface $container
+     * @param Container $container
      */
-    public function setContainer(ContainerInterface $container)
+    public function setContainer(Container $container)
     {
         $this->container = $container;
     }

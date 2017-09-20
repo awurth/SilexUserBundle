@@ -55,7 +55,7 @@ abstract class RoleCommand extends ContainerAwareCommand
             throw new RuntimeException('Not enough arguments.');
         }
 
-        $manipulator = $this->getContainer()->get('silex_user.util.user_manipulator');
+        $manipulator = $this->container['silex_user.util.user_manipulator'];
         $this->executeRoleCommand($manipulator, $output, $username, $super, $role);
     }
 
