@@ -20,6 +20,7 @@ use AWurth\SilexUser\EventListener\EmailConfirmationListener;
 use AWurth\SilexUser\EventListener\FlashListener;
 use AWurth\SilexUser\Mailer\TwigSwiftMailer;
 use AWurth\SilexUser\Security\LoginManager;
+use AWurth\SilexUser\Util\UserManipulator;
 use LogicException;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
@@ -117,6 +118,10 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
             }
 
             return null;
+        };
+
+        $app['silex_user.util.user_manipulator'] = function ($app) {
+            return new UserManipulator($app['silex_user.user_manager'], $app['dispatcher'], $app['request_stack']);
         };
 
         // Controllers

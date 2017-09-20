@@ -18,6 +18,8 @@ interface UserInterface extends AdvancedUserInterface
 {
     const ROLE_DEFAULT = 'ROLE_USER';
 
+    const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
+
     /**
      * Returns the user unique id.
      *
@@ -142,6 +144,22 @@ interface UserInterface extends AdvancedUserInterface
      * @return self
      */
     public function removeRole($role);
+
+    /**
+     * Tells if the the given user has the super admin role.
+     *
+     * @return bool
+     */
+    public function isSuperAdmin();
+
+    /**
+     * Sets the super admin status.
+     *
+     * @param bool $boolean
+     *
+     * @return self
+     */
+    public function setSuperAdmin($boolean);
 
     /**
      * Gets the confirmation token.

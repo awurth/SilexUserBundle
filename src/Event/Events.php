@@ -65,4 +65,46 @@ class Events
      * This event allows you to access the response which will be sent.
      */
     const SECURITY_IMPLICIT_LOGIN = 'silex_user.security.implicit_login';
+
+    /**
+     * The USER_CREATED event occurs when the user is created with UserManipulator.
+     *
+     * This event allows you to access the created user and to add some behaviour after the creation.
+     */
+    const USER_CREATED = 'silex_user.user.created';
+
+    /**
+     * The USER_ACTIVATED event occurs when the user is created with UserManipulator.
+     *
+     * This event allows you to access the activated user and to add some behaviour after the activation.
+     */
+    const USER_ACTIVATED = 'silex_user.user.activated';
+
+    /**
+     * The USER_DEACTIVATED event occurs when the user is created with UserManipulator.
+     *
+     * This event allows you to access the deactivated user and to add some behaviour after the deactivation.
+     */
+    const USER_DEACTIVATED = 'silex_user.user.deactivated';
+
+    /**
+     * The USER_PASSWORD_CHANGED event occurs when the user is created with UserManipulator.
+     *
+     * This event allows you to access the created user and to add some behaviour after the password change.
+     */
+    const USER_PASSWORD_CHANGED = 'silex_user.user.password_changed';
+
+    /**
+     * The USER_PROMOTED event occurs when the user is created with UserManipulator.
+     *
+     * This event allows you to access the promoted user and to add some behaviour after the promotion.
+     */
+    const USER_PROMOTED = 'silex_user.user.promoted';
+    
+    /**
+     * The USER_DEMOTED event occurs when the user is created with UserManipulator.
+     *
+     * This event allows you to access the demoted user and to add some behaviour after the demotion.
+     */
+    const USER_DEMOTED = 'silex_user.user.demoted';
 }
