@@ -3,6 +3,7 @@
 namespace AWurth\SilexUser\Tests\Model;
 
 use AWurth\SilexUser\Model\User;
+use DateTime;
 use PHPUnit\Framework\TestCase;
 
 class UserTest extends TestCase
@@ -67,14 +68,14 @@ class UserTest extends TestCase
         $this->assertTrue($this->user->isEnabled());
     }
 
-    public function testConfirmationToken()
+    public function testLastLogin()
     {
-        $this->assertNull($this->user->getConfirmationToken());
+        $this->assertNull($this->user->getLastLogin());
 
-        $token = rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '=');
+        $date = new DateTime();
+        $this->user->setLastLogin($date);
 
-        $this->user->setConfirmationToken($token);
-        $this->assertSame($token, $this->user->getConfirmationToken());
+        $this->assertSame($date, $this->user->getLastLogin());
     }
 
     public function testRoles()
@@ -101,5 +102,24 @@ class UserTest extends TestCase
         $this->assertTrue($this->user->hasRole($defaultRole));
         $this->user->removeRole($newRole);
         $this->assertFalse($this->user->hasRole($newRole));
+    }
+
+    public function testConfirmationToken()
+    {
+        $this->assertNull($this->user->getConfirmationToken());
+
+        $token = rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '=');
+
+        $this->user->setConfirmationToken($token);
+        $this->assertSame($token, $this->user->getConfirmationToken());
+    }
+
+    public function testEraseCredentials()
+    {
+        $this->user->setPlainPassword('password');
+        $this->assertSame('password', $this->user->getPlainPassword());
+
+        $this->user->eraseCredentials();
+        $this->assertNull($this->user->getPlainPassword());
     }
 }
