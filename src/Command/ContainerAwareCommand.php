@@ -11,47 +11,50 @@
 
 namespace AWurth\SilexUser\Command;
 
-use LogicException;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Console\Command\Command;
 
 /**
  * Command.
  *
- * @author Fabien Potencier <fabien@symfony.com>
+ * @author Alexis Wurth <awurth.dev@gmail.com>
  */
 abstract class ContainerAwareCommand extends Command
 {
     /**
-     * @var ContainerInterface|null
+     * @var ContainerInterface
      */
-    private $container;
+    protected $container;
 
     /**
-     * @return ContainerInterface
+     * Constructor.
      *
-     * @throws LogicException
+     * @param ContainerInterface $container
+     * @param string|null        $name
      */
-    protected function getContainer()
+    public function __construct(ContainerInterface $container, $name = null)
     {
-        if (null === $this->container) {
-            $application = $this->getApplication();
-            if (null === $application) {
-                throw new LogicException('The container cannot be retrieved as the application instance is not yet set.');
-            }
+        parent::__construct($name);
 
-            $this->container = $application->getKernel()->getContainer();
-        }
+        $this->container = $container;
+    }
 
+    /**
+     * Gets the container.
+     *
+     * @return ContainerInterface
+     */
+    public function getContainer()
+    {
         return $this->container;
     }
 
     /**
      * Sets the container.
      *
-     * @param ContainerInterface|null $container A ContainerInterface instance or null
+     * @param ContainerInterface $container
      */
-    public function setContainer(ContainerInterface $container = null)
+    public function setContainer(ContainerInterface $container)
     {
         $this->container = $container;
     }
