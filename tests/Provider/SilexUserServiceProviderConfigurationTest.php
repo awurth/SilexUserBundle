@@ -3,8 +3,10 @@
 namespace AWurth\SilexUser\Tests;
 
 use AWurth\SilexUser\Provider\SilexUserServiceProvider;
+use Dflydev\Provider\DoctrineOrm\DoctrineOrmServiceProvider;
 use LogicException;
 use Silex\Application;
+use Silex\Provider\DoctrineServiceProvider;
 use Silex\Provider\FormServiceProvider;
 use Silex\Provider\LocaleServiceProvider;
 use Silex\Provider\SecurityServiceProvider;
@@ -98,28 +100,10 @@ class SilexUserServiceProviderConfigurationTest extends WebTestCase
 
     /**
      * @expectedException LogicException
-     * @expectedExceptionMessage You must configure a mailer to enable email notifications
-     */
-    public function testEmailConfirmationWithoutMailer()
-    {
-        $this->app['silex_user.options'] = [
-            'object_manager' => 'orm.em',
-            'user_class' => 'User',
-            'firewall_name' => 'main',
-            'registration.confirmation.enabled' => true
-        ];
-
-        $this->app->boot();
-    }
-
-    /**
-     * @expectedException LogicException
      * @expectedExceptionMessage The "registration.confirmation.from_email" option must be set
      */
     public function testEmailConfirmationWithoutFromEmail()
     {
-        $this->app->register(new SwiftmailerServiceProvider());
-
         $this->app['silex_user.options'] = [
             'object_manager' => 'orm.em',
             'user_class' => 'User',
@@ -136,14 +120,29 @@ class SilexUserServiceProviderConfigurationTest extends WebTestCase
      */
     public function testEmailConfirmationWithEmptyFromEmail()
     {
-        $this->app->register(new SwiftmailerServiceProvider());
-
         $this->app['silex_user.options'] = [
             'object_manager' => 'orm.em',
             'user_class' => 'User',
             'firewall_name' => 'main',
             'registration.confirmation.enabled' => true,
             'registration.confirmation.from_email' => ''
+        ];
+
+        $this->app->boot();
+    }
+
+    /**
+     * @expectedException LogicException
+     * @expectedExceptionMessage You must configure a mailer to enable email notifications
+     */
+    public function testEmailConfirmationWithoutMailer()
+    {
+        $this->app['silex_user.options'] = [
+            'object_manager' => 'orm.em',
+            'user_class' => 'User',
+            'firewall_name' => 'main',
+            'registration.confirmation.enabled' => true,
+            'registration.confirmation.from_email' => 'awurth.dev@gmail.com'
         ];
 
         $this->app->boot();
@@ -158,6 +157,8 @@ class SilexUserServiceProviderConfigurationTest extends WebTestCase
         $app->register(new ServiceControllerServiceProvider());
         $app->register(new TwigServiceProvider());
         $app->register(new SessionServiceProvider());
+        $app->register(new DoctrineServiceProvider());
+        $app->register(new DoctrineOrmServiceProvider());
         $app->register(new LocaleServiceProvider());
         $app->register(new TranslationServiceProvider());
         $app->register(new ValidatorServiceProvider());
