@@ -14,7 +14,7 @@ namespace AWurth\SilexUser\EventListener;
 use AWurth\SilexUser\Event\Events;
 use AWurth\SilexUser\Event\FilterUserResponseEvent;
 use AWurth\SilexUser\Event\UserEvent;
-use AWurth\SilexUser\Security\LoginManager;
+use AWurth\SilexUser\Security\LoginManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Exception\AccountStatusException;
@@ -22,7 +22,7 @@ use Symfony\Component\Security\Core\Exception\AccountStatusException;
 class AuthenticationListener implements EventSubscriberInterface
 {
     /**
-     * @var LoginManager
+     * @var LoginManagerInterface
      */
     protected $loginManager;
 
@@ -34,10 +34,10 @@ class AuthenticationListener implements EventSubscriberInterface
     /**
      * Constructor.
      *
-     * @param LoginManager $loginManager
-     * @param string       $firewallName
+     * @param LoginManagerInterface $loginManager
+     * @param string                $firewallName
      */
-    public function __construct(LoginManager $loginManager, $firewallName)
+    public function __construct(LoginManagerInterface $loginManager, $firewallName)
     {
         $this->loginManager = $loginManager;
         $this->firewallName = $firewallName;
@@ -57,10 +57,11 @@ class AuthenticationListener implements EventSubscriberInterface
     /**
      * Authenticates the user.
      *
-     * @param FilterUserResponseEvent $event
+     * @param FilterUserResponseEvent  $event
+     * @param string                   $eventName
      * @param EventDispatcherInterface $dispatcher
      */
-    public function authenticate(FilterUserResponseEvent $event, EventDispatcherInterface $dispatcher)
+    public function authenticate(FilterUserResponseEvent $event, $eventName, EventDispatcherInterface $dispatcher)
     {
         try {
             $this->loginManager->logInUser($this->firewallName, $event->getUser(), $event->getResponse());
