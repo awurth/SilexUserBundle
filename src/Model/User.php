@@ -76,7 +76,7 @@ abstract class User implements UserInterface
     protected $confirmationToken;
 
     /**
-     * Used be the validator to validate the User data.
+     * Used by the validator to validate the User data.
      *
      * @param ClassMetadata $metadata
      */
