@@ -125,11 +125,11 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
         };
 
         // Controllers
-        $app['auth.controller'] = function ($app) {
+        $app['silex_user.auth.controller'] = function ($app) {
             return new AuthController($app);
         };
 
-        $app['registration.controller'] = function ($app) {
+        $app['silex_user.registration.controller'] = function ($app) {
             return new RegistrationController($app);
         };
     }
@@ -169,7 +169,7 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
         /** @var ControllerCollection $controllers */
         $controllers = $app['controllers_factory'];
 
-        $controllers->get('/login', 'auth.controller:loginAction')
+        $controllers->get('/login', 'silex_user.auth.controller:loginAction')
             ->bind('silex_user.login');
 
         $controllers->method('GET|POST')
@@ -181,17 +181,17 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
             ->bind('silex_user.logout');
 
         $controllers->method('GET|POST')
-            ->match('/register', 'registration.controller:registerAction')
+            ->match('/register', 'silex_user.registration.controller:registerAction')
             ->bind('silex_user.register');
 
-        $controllers->get('/register/confirmed', 'registration.controller:confirmedAction')
+        $controllers->get('/register/confirmed', 'silex_user.registration.controller:confirmedAction')
             ->bind('silex_user.registration_confirmed');
 
         if (true === $this->getOption($app, 'registration.confirmation.enabled')) {
-            $controllers->get('/register/check-email', 'registration.controller:checkEmailAction')
+            $controllers->get('/register/check-email', 'silex_user.registration.controller:checkEmailAction')
                 ->bind('silex_user.registration_check_email');
 
-            $controllers->get('/register/confirm/{token}', 'registration.controller:confirmAction')
+            $controllers->get('/register/confirm/{token}', 'silex_user.registration.controller:confirmAction')
                 ->bind('silex_user.registration_confirm');
         }
 
