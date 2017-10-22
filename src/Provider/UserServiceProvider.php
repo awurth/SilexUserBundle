@@ -35,12 +35,15 @@ use Symfony\Component\Translation\Loader\PhpFileLoader;
 use Symfony\Component\Translation\Translator;
 
 /**
- * Silex User Service Provider.
+ * User Service Provider.
  *
  * @author Alexis Wurth <awurth.dev@gmail.com>
  */
-class SilexUserServiceProvider implements ServiceProviderInterface, BootableProviderInterface, ControllerProviderInterface, EventListenerProviderInterface
+class UserServiceProvider implements ServiceProviderInterface, BootableProviderInterface, ControllerProviderInterface, EventListenerProviderInterface
 {
+    /**
+     * @var array
+     */
     protected static $defaultOptions = [
         'use_routes' => true,
         'use_templates' => true,
@@ -52,6 +55,9 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
         'registration.confirmation.from_email' => ''
     ];
 
+    /**
+     * @var array
+     */
     protected static $dependencies = [
         'twig' => 'TwigServiceProvider',
         'session' => 'SessionServiceProvider',
@@ -67,12 +73,12 @@ class SilexUserServiceProvider implements ServiceProviderInterface, BootableProv
     public function register(Container $app)
     {
         if (!$app['resolver'] instanceof ServiceControllerResolver) {
-            throw new LogicException('You must register the ServiceControllerServiceProvider to use the SilexUserServiceProvider');
+            throw new LogicException('You must register the ServiceControllerServiceProvider to use the UserServiceProvider');
         }
 
         foreach (self::$dependencies as $key => $provider) {
             if (!isset($app[$key])) {
-                throw new LogicException('You must register the ' . $provider . ' to use the SilexUserServiceProvider');
+                throw new LogicException('You must register the ' . $provider . ' to use the UserServiceProvider');
             }
         }
 

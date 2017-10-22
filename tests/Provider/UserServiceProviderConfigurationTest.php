@@ -2,7 +2,7 @@
 
 namespace AWurth\SilexUser\Tests;
 
-use AWurth\SilexUser\Provider\SilexUserServiceProvider;
+use AWurth\SilexUser\Provider\UserServiceProvider;
 use Dflydev\Provider\DoctrineOrm\DoctrineOrmServiceProvider;
 use LogicException;
 use Silex\Application;
@@ -12,13 +12,12 @@ use Silex\Provider\LocaleServiceProvider;
 use Silex\Provider\SecurityServiceProvider;
 use Silex\Provider\ServiceControllerServiceProvider;
 use Silex\Provider\SessionServiceProvider;
-use Silex\Provider\SwiftmailerServiceProvider;
 use Silex\Provider\TranslationServiceProvider;
 use Silex\Provider\TwigServiceProvider;
 use Silex\Provider\ValidatorServiceProvider;
 use Silex\WebTestCase;
 
-class SilexUserServiceProviderConfigurationTest extends WebTestCase
+class UserServiceProviderConfigurationTest extends WebTestCase
 {
     /**
      * @expectedException LogicException
@@ -164,7 +163,7 @@ class SilexUserServiceProviderConfigurationTest extends WebTestCase
         $app->register(new ValidatorServiceProvider());
         $app->register(new FormServiceProvider());
         $app->register(new SecurityServiceProvider());
-        $app->register(new SilexUserServiceProvider());
+        $app->register(new UserServiceProvider());
 
         $app['security.firewalls'] = [
             'main' => [
