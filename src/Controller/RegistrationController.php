@@ -16,7 +16,7 @@ use AWurth\Silex\User\Event\FilterUserResponseEvent;
 use AWurth\Silex\User\Event\FormEvent;
 use AWurth\Silex\User\Event\GetResponseUserEvent;
 use AWurth\Silex\User\Event\Events;
-use AWurth\Silex\User\Form\RegistrationFormType;
+use AWurth\Silex\User\Form\Type\RegistrationFormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;

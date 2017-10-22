@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace AWurth\Silex\User\Form;
+namespace AWurth\Silex\User\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
