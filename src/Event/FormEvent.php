@@ -34,15 +34,17 @@ class FormEvent extends Event
     private $response;
 
     /**
-     * FormEvent constructor.
+     * Constructor.
      *
      * @param FormInterface $form
      * @param Request       $request
+     * @param Response|null $response
      */
-    public function __construct(FormInterface $form, Request $request)
+    public function __construct(FormInterface $form, Request $request, Response $response = null)
     {
         $this->form = $form;
         $this->request = $request;
+        $this->response = $response;
     }
 
     /**

@@ -11,19 +11,19 @@
 
 namespace AWurth\Silex\User\Controller;
 
-use AWurth\Silex\User\Model\UserInterface;
+use AWurth\Silex\User\Event\Events;
 use AWurth\Silex\User\Event\FilterUserResponseEvent;
 use AWurth\Silex\User\Event\FormEvent;
 use AWurth\Silex\User\Event\GetResponseUserEvent;
-use AWurth\Silex\User\Event\Events;
 use AWurth\Silex\User\Form\Type\RegistrationFormType;
+use AWurth\Silex\User\Model\UserInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
- * Silex User Registration Controller.
+ * User Registration Controller.
  *
  * @author Alexis Wurth <awurth.dev@gmail.com>
  */

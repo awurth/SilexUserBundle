@@ -23,13 +23,13 @@ class FilterUserResponseEvent extends UserEvent
     private $response;
 
     /**
-     * FilterUserResponseEvent constructor.
+     * Constructor.
      *
      * @param UserInterface $user
      * @param Request       $request
-     * @param Response      $response
+     * @param Response|null $response
      */
-    public function __construct(UserInterface $user, Request $request, Response $response)
+    public function __construct(UserInterface $user, Request $request, Response $response = null)
     {
         parent::__construct($user, $request);
 

@@ -18,17 +18,17 @@ use Symfony\Component\HttpFoundation\Request;
 class UserEvent extends Event
 {
     /**
-     * @var null|Request
+     * @var Request|null
      */
-    protected $request;
+    private $request;
 
     /**
      * @var UserInterface
      */
-    protected $user;
+    private $user;
 
     /**
-     * UserEvent constructor.
+     * Constructor.
      *
      * @param UserInterface $user
      * @param Request|null  $request
@@ -48,7 +48,7 @@ class UserEvent extends Event
     }
 
     /**
-     * @return Request
+     * @return Request|null
      */
     public function getRequest()
     {

@@ -16,7 +16,7 @@ use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**
- * Silex User Authentication Controller.
+ * User Authentication Controller.
  *
  * @author Alexis Wurth <awurth.dev@gmail.com>
  */

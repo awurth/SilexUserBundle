@@ -12,7 +12,7 @@
 namespace AWurth\Silex\User\Event;
 
 /**
- * Contains all events thrown by SilexUser.
+ * Contains all events thrown by the Silex User Provider.
  */
 class Events
 {

@@ -22,7 +22,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 /**
- * Silex User base Controller.
+ * Base Controller.
  *
  * @author Alexis Wurth <awurth.dev@gmail.com>
  */
