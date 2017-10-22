@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace AWurth\SilexUser\Entity;
+namespace AWurth\Silex\User\Entity;
 
-use AWurth\SilexUser\Model\User as BaseUser;
+use AWurth\Silex\User\Model\User as BaseUser;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;

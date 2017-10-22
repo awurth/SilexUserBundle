@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace AWurth\SilexUser\Util;
+namespace AWurth\Silex\User\Util;
 
-use AWurth\SilexUser\Event\Events;
-use AWurth\SilexUser\Event\UserEvent;
-use AWurth\SilexUser\Model\UserInterface;
-use AWurth\SilexUser\Model\UserManagerInterface;
+use AWurth\Silex\User\Event\Events;
+use AWurth\Silex\User\Event\UserEvent;
+use AWurth\Silex\User\Model\UserInterface;
+use AWurth\Silex\User\Model\UserManagerInterface;
 use InvalidArgumentException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;

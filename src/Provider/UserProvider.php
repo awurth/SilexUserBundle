@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace AWurth\SilexUser\Provider;
+namespace AWurth\Silex\User\Provider;
 
-use AWurth\SilexUser\Model\UserInterface;
-use AWurth\SilexUser\Model\UserManagerInterface;
+use AWurth\Silex\User\Model\UserInterface;
+use AWurth\Silex\User\Model\UserManagerInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface as SecurityUserInterface;
@@ -57,7 +57,7 @@ class UserProvider implements UserProviderInterface
         $class = get_class($user);
 
         if (!$user instanceof UserInterface) {
-            throw new UnsupportedUserException(sprintf('Expected an instance of AWurth\SilexUser\Entity\UserInterface, but got "%s".', $class));
+            throw new UnsupportedUserException(sprintf('Expected an instance of AWurth\Silex\User\Entity\UserInterface, but got "%s".', $class));
         }
 
         if (!$this->supportsClass($class)) {

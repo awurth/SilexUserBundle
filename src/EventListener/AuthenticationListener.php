@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace AWurth\SilexUser\EventListener;
+namespace AWurth\Silex\User\EventListener;
 
-use AWurth\SilexUser\Event\Events;
-use AWurth\SilexUser\Event\FilterUserResponseEvent;
-use AWurth\SilexUser\Event\UserEvent;
-use AWurth\SilexUser\Security\LoginManagerInterface;
+use AWurth\Silex\User\Event\Events;
+use AWurth\Silex\User\Event\FilterUserResponseEvent;
+use AWurth\Silex\User\Event\UserEvent;
+use AWurth\Silex\User\Security\LoginManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Exception\AccountStatusException;

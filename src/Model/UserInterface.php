@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace AWurth\SilexUser\Model;
+namespace AWurth\Silex\User\Model;
 
 use DateTime;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;

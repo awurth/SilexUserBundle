@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace AWurth\SilexUser\Controller;
+namespace AWurth\Silex\User\Controller;
 
-use AWurth\SilexUser\Model\UserInterface;
-use AWurth\SilexUser\Model\UserManagerInterface;
+use AWurth\Silex\User\Model\UserInterface;
+use AWurth\Silex\User\Model\UserManagerInterface;
 use Silex\Application;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;

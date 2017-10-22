@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace AWurth\SilexUser\EventListener;
+namespace AWurth\Silex\User\EventListener;
 
-use AWurth\SilexUser\Model\UserInterface;
-use AWurth\SilexUser\Event\Events;
-use AWurth\SilexUser\Event\FormEvent;
-use AWurth\SilexUser\Mailer\MailerInterface;
+use AWurth\Silex\User\Model\UserInterface;
+use AWurth\Silex\User\Event\Events;
+use AWurth\Silex\User\Event\FormEvent;
+use AWurth\Silex\User\Mailer\MailerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;

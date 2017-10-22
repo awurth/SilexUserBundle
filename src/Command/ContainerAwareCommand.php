@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace AWurth\SilexUser\Command;
+namespace AWurth\Silex\User\Command;
 
 use Pimple\Container;
 use Symfony\Component\Console\Command\Command;

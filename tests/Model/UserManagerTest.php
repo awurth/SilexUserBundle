@@ -1,11 +1,11 @@
 <?php
 
-namespace AWurth\SilexUser\Tests\Model;
+namespace AWurth\Silex\User\Tests\Model;
 
-use AWurth\SilexUser\Model\UserManager;
+use AWurth\Silex\User\Model\UserManager;
+use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\Persistence\ObjectRepository;
-use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use PHPUnit\Framework\TestCase;
 use PHPUnit_Framework_MockObject_MockObject;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace AWurth\SilexUser\Controller;
+namespace AWurth\Silex\User\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;

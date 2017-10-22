@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace AWurth\SilexUser\Security;
+namespace AWurth\Silex\User\Security;
 
-use AWurth\SilexUser\Model\UserInterface;
+use AWurth\Silex\User\Model\UserInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 interface LoginManagerInterface

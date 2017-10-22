@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace AWurth\SilexUser\Validator\Constraints;
+namespace AWurth\Silex\User\Validator\Constraints;
 
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 

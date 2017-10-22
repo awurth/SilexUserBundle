@@ -9,18 +9,18 @@
  * file that was distributed with this source code.
  */
 
-namespace AWurth\SilexUser\Provider;
+namespace AWurth\Silex\User\Provider;
 
-use AWurth\SilexUser\Controller\AuthController;
-use AWurth\SilexUser\Controller\RegistrationController;
-use AWurth\SilexUser\EventListener\LastLoginListener;
-use AWurth\SilexUser\Model\UserManager;
-use AWurth\SilexUser\EventListener\AuthenticationListener;
-use AWurth\SilexUser\EventListener\EmailConfirmationListener;
-use AWurth\SilexUser\EventListener\FlashListener;
-use AWurth\SilexUser\Mailer\TwigSwiftMailer;
-use AWurth\SilexUser\Security\LoginManager;
-use AWurth\SilexUser\Util\UserManipulator;
+use AWurth\Silex\User\Controller\AuthController;
+use AWurth\Silex\User\Controller\RegistrationController;
+use AWurth\Silex\User\EventListener\LastLoginListener;
+use AWurth\Silex\User\Model\UserManager;
+use AWurth\Silex\User\EventListener\AuthenticationListener;
+use AWurth\Silex\User\EventListener\EmailConfirmationListener;
+use AWurth\Silex\User\EventListener\FlashListener;
+use AWurth\Silex\User\Mailer\TwigSwiftMailer;
+use AWurth\Silex\User\Security\LoginManager;
+use AWurth\Silex\User\Util\UserManipulator;
 use LogicException;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;

@@ -1,10 +1,10 @@
 <?php
 
-namespace EventListener;
+namespace AWurth\Silex\User\Tests\EventListener;
 
-use AWurth\SilexUser\Event\Events;
-use AWurth\SilexUser\Event\FilterUserResponseEvent;
-use AWurth\SilexUser\EventListener\AuthenticationListener;
+use AWurth\Silex\User\Event\Events;
+use AWurth\Silex\User\Event\FilterUserResponseEvent;
+use AWurth\Silex\User\EventListener\AuthenticationListener;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -29,7 +29,7 @@ class AuthenticationListenerTest extends TestCase
 
     public function setUp()
     {
-        $user = $this->getMockBuilder('AWurth\SilexUser\Model\UserInterface')->getMock();
+        $user = $this->getMockBuilder('AWurth\Silex\User\Model\UserInterface')->getMock();
 
         $response = $this->getMockBuilder('Symfony\Component\HttpFoundation\Response')->getMock();
         $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')->getMock();
@@ -38,7 +38,7 @@ class AuthenticationListenerTest extends TestCase
         $this->eventDispatcher = $this->getMockBuilder('Symfony\Component\EventDispatcher\EventDispatcher')->getMock();
         $this->eventDispatcher->expects($this->once())->method('dispatch');
 
-        $loginManager = $this->getMockBuilder('AWurth\SilexUser\Security\LoginManagerInterface')->getMock();
+        $loginManager = $this->getMockBuilder('AWurth\Silex\User\Security\LoginManagerInterface')->getMock();
 
         $this->listener = new AuthenticationListener($loginManager, self::FIREWALL_NAME);
     }

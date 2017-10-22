@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace AWurth\SilexUser\Document;
+namespace AWurth\Silex\User\Document;
 
-use AWurth\SilexUser\Model\User as BaseUser;
-use AWurth\SilexUser\Validator\Constraints\Unique;
+use AWurth\Silex\User\Model\User as BaseUser;
+use AWurth\Silex\User\Validator\Constraints\Unique;
 use DateTime;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Symfony\Component\Validator\Mapping\ClassMetadata;

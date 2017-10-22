@@ -1,8 +1,8 @@
 <?php
 
-namespace AWurth\SilexUser\Tests;
+namespace AWurth\Silex\User\Tests\Provider;
 
-use AWurth\SilexUser\Provider\UserServiceProvider;
+use AWurth\Silex\User\Provider\UserServiceProvider;
 use Dflydev\Provider\DoctrineOrm\DoctrineOrmServiceProvider;
 use LogicException;
 use Silex\Application;

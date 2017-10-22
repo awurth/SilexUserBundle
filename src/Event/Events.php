@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace AWurth\SilexUser\Event;
+namespace AWurth\Silex\User\Event;
 
 /**
  * Contains all events thrown by SilexUser.
@@ -34,7 +34,7 @@ class Events
      * The REGISTRATION_FAILURE event occurs when the registration form is not valid.
      *
      * This event allows you to set the response instead of using the default one.
-     * The event listener method receives a AWurth\SilexUser\Event\FormEvent instance.
+     * The event listener method receives a AWurth\Silex\User\Event\FormEvent instance.
      */
     const REGISTRATION_FAILURE = 'silex_user.registration.failure';
 

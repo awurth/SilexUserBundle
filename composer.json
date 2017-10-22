@@ -28,12 +28,12 @@
     },
     "autoload": {
         "psr-4": {
-            "AWurth\\SilexUser\\": "src/"
+            "AWurth\\Silex\\User\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "AWurth\\SilexUser\\Tests\\": "tests/"
+            "AWurth\\Silex\\User\\Tests\\": "tests/"
         }
     },
     "config": {

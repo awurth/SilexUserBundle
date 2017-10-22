@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace AWurth\SilexUser\Event;
+namespace AWurth\Silex\User\Event;
 
+use AWurth\Silex\User\Model\UserInterface;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
-use AWurth\SilexUser\Model\UserInterface;
 
 class UserEvent extends Event
 {

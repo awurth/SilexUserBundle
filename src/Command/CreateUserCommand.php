@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace AWurth\SilexUser\Command;
+namespace AWurth\Silex\User\Command;
 
 use Exception;
 use Symfony\Component\Console\Input\InputArgument;

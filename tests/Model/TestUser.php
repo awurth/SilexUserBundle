@@ -1,8 +1,8 @@
 <?php
 
-namespace AWurth\SilexUser\Tests\Model;
+namespace AWurth\Silex\User\Tests\Model;
 
-use AWurth\SilexUser\Model\User;
+use AWurth\Silex\User\Model\User;
 
 class TestUser extends User
 {

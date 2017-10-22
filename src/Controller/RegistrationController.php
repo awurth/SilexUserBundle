@@ -9,14 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace AWurth\SilexUser\Controller;
+namespace AWurth\Silex\User\Controller;
 
-use AWurth\SilexUser\Model\UserInterface;
-use AWurth\SilexUser\Event\FilterUserResponseEvent;
-use AWurth\SilexUser\Event\FormEvent;
-use AWurth\SilexUser\Event\GetResponseUserEvent;
-use AWurth\SilexUser\Event\Events;
-use AWurth\SilexUser\Form\RegistrationFormType;
+use AWurth\Silex\User\Model\UserInterface;
+use AWurth\Silex\User\Event\FilterUserResponseEvent;
+use AWurth\Silex\User\Event\FormEvent;
+use AWurth\Silex\User\Event\GetResponseUserEvent;
+use AWurth\Silex\User\Event\Events;
+use AWurth\Silex\User\Form\RegistrationFormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;

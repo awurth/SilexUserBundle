@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace AWurth\SilexUser\EventListener;
+namespace AWurth\Silex\User\EventListener;
 
-use AWurth\SilexUser\Event\Events;
+use AWurth\Silex\User\Event\Events;
 use InvalidArgumentException;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;

@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace AWurth\SilexUser\Mailer;
+namespace AWurth\Silex\User\Mailer;
 
-use AWurth\SilexUser\Model\UserInterface;
+use AWurth\Silex\User\Model\UserInterface;
 
 interface MailerInterface
 {

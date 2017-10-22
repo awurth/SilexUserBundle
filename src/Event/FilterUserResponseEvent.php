@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace AWurth\SilexUser\Event;
+namespace AWurth\Silex\User\Event;
 
+use AWurth\Silex\User\Model\UserInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use AWurth\SilexUser\Model\UserInterface;
 
 class FilterUserResponseEvent extends UserEvent
 {

@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace AWurth\SilexUser\Command;
+namespace AWurth\Silex\User\Command;
 
-use AWurth\SilexUser\Util\UserManipulator;
+use AWurth\Silex\User\Util\UserManipulator;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**

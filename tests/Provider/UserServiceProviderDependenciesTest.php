@@ -1,8 +1,8 @@
 <?php
 
-namespace AWurth\SilexUser\Tests;
+namespace AWurth\Silex\User\Tests\Provider;
 
-use AWurth\SilexUser\Provider\UserServiceProvider;
+use AWurth\Silex\User\Provider\UserServiceProvider;
 use LogicException;
 use Silex\Application;
 use Silex\Provider\FormServiceProvider;
@@ -50,7 +50,7 @@ class UserServiceProviderDependenciesTest extends WebTestCase
      * @expectedException LogicException
      * @expectedExceptionMessage You must register the TranslationServiceProvider to use the UserServiceProvider
      */
-    public function testRegisterWitoutTranslation()
+    public function testRegisterWithoutTranslation()
     {
         $this->app->register(new ServiceControllerServiceProvider());
         $this->app->register(new TwigServiceProvider());
@@ -62,7 +62,7 @@ class UserServiceProviderDependenciesTest extends WebTestCase
      * @expectedException LogicException
      * @expectedExceptionMessage You must register the ValidatorServiceProvider to use the UserServiceProvider
      */
-    public function testRegisterWitoutValidator()
+    public function testRegisterWithoutValidator()
     {
         $this->app->register(new ServiceControllerServiceProvider());
         $this->app->register(new TwigServiceProvider());
@@ -76,7 +76,7 @@ class UserServiceProviderDependenciesTest extends WebTestCase
      * @expectedException LogicException
      * @expectedExceptionMessage You must register the FormServiceProvider to use the UserServiceProvider
      */
-    public function testRegisterWitoutForm()
+    public function testRegisterWithoutForm()
     {
         $this->app->register(new ServiceControllerServiceProvider());
         $this->app->register(new TwigServiceProvider());
@@ -91,7 +91,7 @@ class UserServiceProviderDependenciesTest extends WebTestCase
      * @expectedException LogicException
      * @expectedExceptionMessage You must register the SecurityServiceProvider to use the UserServiceProvider
      */
-    public function tetRegisterWitoutSecurity()
+    public function tetRegisterWithoutSecurity()
     {
         $this->app->register(new ServiceControllerServiceProvider());
         $this->app->register(new TwigServiceProvider());

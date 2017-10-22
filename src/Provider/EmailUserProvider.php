@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace AWurth\SilexUser\Provider;
+namespace AWurth\Silex\User\Provider;
 
 class EmailUserProvider extends UserProvider
 {

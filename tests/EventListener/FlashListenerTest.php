@@ -1,9 +1,9 @@
 <?php
 
-namespace EventListener;
+namespace AWurth\Silex\User\Tests\EventListener;
 
-use AWurth\SilexUser\Event\Events;
-use AWurth\SilexUser\EventListener\FlashListener;
+use AWurth\Silex\User\Event\Events;
+use AWurth\Silex\User\EventListener\FlashListener;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\Event;
 
