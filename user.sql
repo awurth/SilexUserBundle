@@ -13,4 +13,3 @@ CREATE TABLE `user` (
   UNIQUE INDEX `UNIQ_8D93D649C05FB297` (`confirmation_token`),
   PRIMARY KEY(`id`)
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
-

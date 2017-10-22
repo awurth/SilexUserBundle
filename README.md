@@ -1,8 +1,8 @@
-# SilexUser - User management system for Silex
+# Silex User Provider - User management system for Silex
 
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/1ec0cb08-4d4f-4dcf-86ff-6512afaf24d5/mini.png)](https://insight.sensiolabs.com/projects/1ec0cb08-4d4f-4dcf-86ff-6512afaf24d5) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/awurth/silex-user/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/awurth/silex-user/?branch=master) [![Total Downloads](https://poser.pugx.org/awurth/silex-user/downloads)](https://packagist.org/packages/awurth/silex-user) [![License](https://poser.pugx.org/awurth/silex-user/license)](https://packagist.org/packages/awurth/silex-user)
 
-SilexUser adds support for a user system in Silex. It provides a flexible framework for user management that aims to handle common tasks such as user registration and authentication.
+The Silex User Provider adds support for a user system in Silex. It provides a flexible framework for user management that aims to handle common tasks such as user registration and authentication.
 
 Features include:
 
