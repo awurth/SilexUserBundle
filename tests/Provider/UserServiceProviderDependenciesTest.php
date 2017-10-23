@@ -91,7 +91,7 @@ class UserServiceProviderDependenciesTest extends WebTestCase
      * @expectedException LogicException
      * @expectedExceptionMessage You must register the SecurityServiceProvider to use the UserServiceProvider
      */
-    public function tetRegisterWithoutSecurity()
+    public function testRegisterWithoutSecurity()
     {
         $this->app->register(new ServiceControllerServiceProvider());
         $this->app->register(new TwigServiceProvider());
