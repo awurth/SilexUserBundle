@@ -56,31 +56,11 @@ class UserServiceProvider implements ServiceProviderInterface, BootableProviderI
     ];
 
     /**
-     * @var array
-     */
-    protected static $dependencies = [
-        'twig' => 'TwigServiceProvider',
-        'session' => 'SessionServiceProvider',
-        'translator' => 'TranslationServiceProvider',
-        'validator' => 'ValidatorServiceProvider',
-        'form.factory' => 'FormServiceProvider',
-        'security.token_storage' => 'SecurityServiceProvider'
-    ];
-
-    /**
      * {@inheritdoc}
      */
     public function register(Container $app)
     {
-        if (!$app['resolver'] instanceof ServiceControllerResolver) {
-            throw new LogicException('You must register the ServiceControllerServiceProvider to use the UserServiceProvider');
-        }
-
-        foreach (self::$dependencies as $key => $provider) {
-            if (!isset($app[$key])) {
-                throw new LogicException('You must register the ' . $provider . ' to use the UserServiceProvider');
-            }
-        }
+        $this->checkDependencies($app);
 
         $app['silex_user.options'] = [];
 
@@ -113,7 +93,7 @@ class UserServiceProvider implements ServiceProviderInterface, BootableProviderI
         };
 
         $app['silex_user.mailer'] = function ($app) {
-            if (isset($app['mailer']) && get_class($app['mailer']) === 'Swift_Mailer') {
+            if (isset($app['mailer']) && 'Swift_Mailer' === get_class($app['mailer'])) {
                 $parameters = [
                     'from_email' => [
                         'confirmation' => $this->getOption($app, 'registration.confirmation.from_email')
@@ -235,6 +215,33 @@ class UserServiceProvider implements ServiceProviderInterface, BootableProviderI
     }
 
     /**
+     * Checks if all required Service Providers are enabled.
+     *
+     * @param Container $app
+     */
+    protected function checkDependencies(Container $app)
+    {
+        $dependencies = [
+            'twig' => 'TwigServiceProvider',
+            'session' => 'SessionServiceProvider',
+            'translator' => 'TranslationServiceProvider',
+            'validator' => 'ValidatorServiceProvider',
+            'form.factory' => 'FormServiceProvider',
+            'security.token_storage' => 'SecurityServiceProvider'
+        ];
+
+        if (!$app['resolver'] instanceof ServiceControllerResolver) {
+            throw new LogicException('You must register the ServiceControllerServiceProvider to use the UserServiceProvider');
+        }
+
+        foreach ($dependencies as $key => $provider) {
+            if (!isset($app[$key])) {
+                throw new LogicException(sprintf('You must register the %s to use the UserServiceProvider', $provider));
+            }
+        }
+    }
+
+    /**
      * Gets an option or its default value if it is not set.
      *
      * @param Container $app
@@ -254,20 +261,16 @@ class UserServiceProvider implements ServiceProviderInterface, BootableProviderI
     /**
      * Checks if options are set correctly.
      *
-     * @param Application $app
+     * @param Container $app
      */
-    protected function validateOptions(Application $app)
+    protected function validateOptions(Container $app)
     {
-        if (empty($app['silex_user.options']['object_manager'])) {
-            throw new LogicException('The "object_manager" option must be set');
-        }
+        $requiredOptions = ['object_manager', 'user_class', 'firewall_name'];
 
-        if (empty($app['silex_user.options']['user_class'])) {
-            throw new LogicException('The "user_class" option must be set');
-        }
-
-        if (empty($app['silex_user.options']['firewall_name'])) {
-            throw new LogicException('The "firewall_name" option must be set');
+        foreach ($requiredOptions as $option) {
+            if (empty($app['silex_user.options'][$option])) {
+                throw new LogicException(sprintf('The "%s" option must be set', $option));
+            }
         }
 
         if (true === $this->getOption($app, 'registration.confirmation.enabled') && empty($this->getOption($app, 'registration.confirmation.from_email'))) {
