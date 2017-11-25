@@ -66,7 +66,7 @@ class UserServiceProvider implements ServiceProviderInterface, BootableProviderI
 
         // Services
         $app['silex_user.user_manager'] = function ($app) {
-            $this->validateOptions($app);
+            $this->checkOptions($app);
 
             return new UserManager(
                 $app[$app['silex_user.options']['object_manager']],
@@ -191,7 +191,7 @@ class UserServiceProvider implements ServiceProviderInterface, BootableProviderI
     {
         $app['silex_user.options'] = array_replace(self::$defaultOptions, $app['silex_user.options']);
 
-        $this->validateOptions($app);
+        $this->checkOptions($app);
 
         if (true === $this->getOption($app, 'use_last_login_listener')) {
             $dispatcher->addSubscriber(new LastLoginListener($app['silex_user.user_manager']));
@@ -242,6 +242,26 @@ class UserServiceProvider implements ServiceProviderInterface, BootableProviderI
     }
 
     /**
+     * Checks if options are set correctly.
+     *
+     * @param Container $app
+     */
+    protected function checkOptions(Container $app)
+    {
+        $requiredOptions = ['object_manager', 'user_class', 'firewall_name'];
+
+        foreach ($requiredOptions as $option) {
+            if (empty($app['silex_user.options'][$option])) {
+                throw new LogicException(sprintf('The "%s" option must be set', $option));
+            }
+        }
+
+        if (true === $this->getOption($app, 'registration.confirmation.enabled') && empty($this->getOption($app, 'registration.confirmation.from_email'))) {
+            throw new LogicException('The "registration.confirmation.from_email" option must be set');
+        }
+    }
+
+    /**
      * Gets an option or its default value if it is not set.
      *
      * @param Container $app
@@ -255,26 +275,6 @@ class UserServiceProvider implements ServiceProviderInterface, BootableProviderI
             return $app['silex_user.options'][$name];
         } else {
             return self::$defaultOptions[$name];
-        }
-    }
-
-    /**
-     * Checks if options are set correctly.
-     *
-     * @param Container $app
-     */
-    protected function validateOptions(Container $app)
-    {
-        $requiredOptions = ['object_manager', 'user_class', 'firewall_name'];
-
-        foreach ($requiredOptions as $option) {
-            if (empty($app['silex_user.options'][$option])) {
-                throw new LogicException(sprintf('The "%s" option must be set', $option));
-            }
-        }
-
-        if (true === $this->getOption($app, 'registration.confirmation.enabled') && empty($this->getOption($app, 'registration.confirmation.from_email'))) {
-            throw new LogicException('The "registration.confirmation.from_email" option must be set');
         }
     }
 }
