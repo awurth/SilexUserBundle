@@ -24,7 +24,7 @@ class FlashListener implements EventSubscriberInterface
      * @var array
      */
     protected static $successMessages = [
-        Events::REGISTRATION_COMPLETED => 'silex_user.registration.flash.user_created'
+        Events::REGISTRATION_COMPLETED => 'registration.flash.user_created'
     ];
 
     /**
@@ -71,6 +71,6 @@ class FlashListener implements EventSubscriberInterface
             throw new InvalidArgumentException('This event does not correspond to a known flash message');
         }
 
-        $this->session->getFlashBag()->add('success', $this->translator->trans(self::$successMessages[$eventName]));
+        $this->session->getFlashBag()->add('success', $this->translator->trans(self::$successMessages[$eventName], [], 'silex_user'));
     }
 }
