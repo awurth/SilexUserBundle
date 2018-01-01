@@ -126,7 +126,7 @@ class UserServiceProvider implements ServiceProviderInterface, BootableProviderI
     public function boot(Application $app)
     {
         if (true === $this->getOption($app, 'use_templates')) {
-            $app['twig.loader.filesystem']->addPath(dirname(__DIR__).'/Resources/views/');
+            $app['twig.loader.filesystem']->addPath(__DIR__.'/../../templates');
         }
 
         if (true === $this->getOption($app, 'use_translations')) {
